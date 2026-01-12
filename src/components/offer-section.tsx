@@ -2,15 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Sparkles, BadgeCheck } from "lucide-react";
+import { Sparkles, BadgeCheck, ChevronLeft } from "lucide-react";
 import { CountdownTimer } from "./countdown-timer";
 import type { AnalyzeProfileAptitudeOutput } from "@/ai/flows/analyze-profile-aptitude";
 
 type OfferSectionProps = {
   result: AnalyzeProfileAptitudeOutput | null;
+  onBack: () => void;
 };
 
-export function OfferSection({ result }: OfferSectionProps) {
+export function OfferSection({ result, onBack }: OfferSectionProps) {
   const score = result?.compatibilityScore ?? 92;
   const feedback = result?.feedback ?? "Seu perfil tem alta compatibilidade com nosso método. Você está pronto para começar a lucrar com IA.";
 
@@ -48,6 +49,11 @@ export function OfferSection({ result }: OfferSectionProps) {
                 <CountdownTimer />
             </div>
         </Card>
+
+        <Button variant="ghost" onClick={onBack} className="mt-4 flex items-center gap-2 text-slate-400 hover:text-white mx-auto">
+            <ChevronLeft className="w-4 h-4" />
+            Refazer o teste
+        </Button>
     </div>
   );
 }

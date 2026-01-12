@@ -18,6 +18,16 @@ export default function Home() {
     setStep('quiz');
   };
 
+  const handleGoBack = () => {
+    if (step === 'quiz') {
+      setStep('hero');
+    } else if (step === 'offer') {
+      setQuizAnswers({});
+      setAnalysisResult(null);
+      setStep('quiz');
+    }
+  }
+
   const handleQuizComplete = (answers: Record<string, any>) => {
     setQuizAnswers(answers);
     setStep('processing');
@@ -52,9 +62,9 @@ export default function Home() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-0"></div>
       <div className="relative z-10 w-full h-full flex items-center justify-center">
         {step === 'hero' && <HeroSection onStart={handleStartQuiz} />}
-        {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} />}
+        {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBack} />}
         {step === 'processing' && <ProcessingSection />}
-        {step === 'offer' && <OfferSection result={analysisResult} />}
+        {step === 'offer' && <OfferSection result={analysisResult} onBack={handleGoBack} />}
       </div>
     </main>
   );

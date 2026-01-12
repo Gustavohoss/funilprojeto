@@ -4,9 +4,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
+import { ChevronLeft } from "lucide-react";
 
 type QuizSectionProps = {
   onComplete: (answers: Record<string, any>) => void;
+  onBack: () => void;
 };
 
 const questions = [
@@ -16,7 +18,7 @@ const questions = [
   { id: 'learning_willingness', text: 'Você está disposto(a) a aprender novas habilidades para atingir seus objetivos?', options: ['Com certeza!', 'Talvez, dependendo do esforço', 'Não muito'] },
 ];
 
-export function QuizSection({ onComplete }: QuizSectionProps) {
+export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   
@@ -62,6 +64,11 @@ export function QuizSection({ onComplete }: QuizSectionProps) {
           ))}
         </div>
       </Card>
+
+      <Button variant="ghost" onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-white mx-auto">
+        <ChevronLeft className="w-4 h-4" />
+        Voltar
+      </Button>
     </div>
   );
 }
