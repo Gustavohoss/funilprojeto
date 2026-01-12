@@ -22,7 +22,7 @@ const questions = [
 
 function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value: number) => void }) {
   const [hours, setHours] = useState(1);
-  const dailyEarning = hours * 300;
+  const dailyEarning = hours * 200;
   const monthlyEarning = dailyEarning * 30;
 
   return (
