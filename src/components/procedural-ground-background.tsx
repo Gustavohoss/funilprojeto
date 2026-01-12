@@ -64,6 +64,14 @@ const ProceduralGroundBackground: React.FC = () => {
         vec3 finalColor = mix(u_color_background, vec3(0.0,0.0,0.0), n * 0.6);
         finalColor += topoLine * u_color_primary * depth * 0.8;
         
+        // Pulsating green light from below for mobile
+        float screenRatio = u_resolution.y / u_resolution.x;
+        if (screenRatio > 1.0) { // Simple check for portrait mode (mobile)
+          float pulse = 0.5 + 0.5 * sin(u_time * 2.0);
+          float glow = smoothstep(0.8, -0.2, uv.y);
+          finalColor += u_color_primary * glow * pulse * 0.25;
+        }
+
         // Horizon Fog / Fade
         float fade = smoothstep(0.1, -1.0, uv.y);
         finalColor *= (1.0 - length(uv) * 0.45) * (1.0 - fade);
