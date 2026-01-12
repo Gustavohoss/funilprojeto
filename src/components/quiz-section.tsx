@@ -15,7 +15,6 @@ type QuizSectionProps = {
 const questions = [
   { id: 'daily_internet_access', text: 'Você possui acesso à internet pelo menos 30 min por dia?', options: ['Sim', 'Não'] },
   { id: 'tech_familiarity', text: 'Qual seu nível de familiaridade com tecnologia?', options: ['Iniciante', 'Intermediário', 'Avançado'] },
-  { id: 'income_goal', text: 'Quanto você gostaria de ganhar extra por mês?', options: ['Até R$500', 'De R$500 a R$1.500', 'Acima de R$1.500'] },
   { id: 'work_hours', text: 'Quantas horas por dia você pode se dedicar?', type: 'slider', min: 0, max: 15, step: 1 },
   { id: 'learning_willingness', text: 'Você está disposto(a) a aprender novas habilidades para atingir seus objetivos?', options: ['Com certeza!', 'Talvez, dependendo do esforço', 'Não muito'] },
 ];
