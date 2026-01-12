@@ -90,7 +90,7 @@ body {
   }
   
   .border-element {
-    @apply absolute opacity-0 transition-opacity duration-300;
+    @apply absolute opacity-100;
     will-change: transform;
     border-radius: inherit;
     width: 100%;
@@ -98,7 +98,7 @@ body {
     z-index: 10;
   }
 
-  .glow-card:hover .border-element {
+  .glow-card .border-element {
     opacity: 1;
   }
   
