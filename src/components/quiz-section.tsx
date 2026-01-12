@@ -26,7 +26,7 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
   const monthlyEarning = dailyEarning * 30;
 
   return (
-    <div className="flex flex-col gap-8 items-center">
+    <div className="flex flex-col gap-6 items-center">
       <div className="w-full text-center">
         <Slider
           defaultValue={[hours]}
@@ -36,19 +36,19 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
           onValueChange={(value) => setHours(value[0])}
           className="my-8"
         />
-        <p className="text-xl text-slate-300">Horas por dia: <span className="font-bold text-white">{hours}h</span></p>
+        <p className="text-lg text-slate-300">Horas por dia: <span className="font-bold text-white">{hours}h</span></p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 w-full justify-around">
-        <div className="text-center p-4 bg-primary/10 rounded-lg border border-primary/20">
-          <p className="text-slate-300">Potencial de Ganhos</p>
-          <p className="text-2xl font-bold text-primary">por DIA</p>
-          <p className="text-4xl font-bold text-white">R$ {dailyEarning.toLocaleString('pt-BR')}</p>
+      <div className="flex flex-row gap-4 w-full justify-around">
+        <div className="text-center p-3 md:p-4 bg-primary/10 rounded-lg border border-primary/20 flex-1">
+          <p className="text-xs md:text-sm text-slate-300">Potencial de Ganhos</p>
+          <p className="text-lg md:text-2xl font-bold text-primary">por DIA</p>
+          <p className="text-2xl md:text-4xl font-bold text-white">R$ {dailyEarning.toLocaleString('pt-BR')}</p>
         </div>
-        <div className="text-center p-4 bg-white/5 rounded-lg">
-          <p className="text-slate-300">Potencial de Ganhos</p>
-          <p className="text-2xl font-bold text-slate-300">por MÊS</p>
-          <p className="text-4xl font-bold text-white">R$ {monthlyEarning.toLocaleString('pt-BR')}</p>
+        <div className="text-center p-3 md:p-4 bg-white/5 rounded-lg flex-1">
+          <p className="text-xs md:text-sm text-slate-300">Potencial de Ganhos</p>
+          <p className="text-lg md:text-2xl font-bold text-slate-300">por MÊS</p>
+          <p className="text-2xl md:text-4xl font-bold text-white">R$ {monthlyEarning.toLocaleString('pt-BR')}</p>
         </div>
       </div>
       
@@ -89,35 +89,33 @@ export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
         <Progress value={progress} className="h-2 bg-gray-800 [&>div]:bg-primary transition-all duration-300" />
       </div>
 
-      <CardCanvas>
-        <ShadCard key={currentQuestionIndex} className="p-8 bg-transparent border-none">
-            <div
-              className="w-full text-center animate-fade-in"
-            >
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 font-headline">
-                {currentQuestion.text}
-              </h2>
-              
-              {currentQuestion.type === 'slider' ? (
-                <HoursSelector question={currentQuestion} onAnswer={handleAnswer} />
-              ) : (
-                <div className="flex flex-col gap-4">
-                  {currentQuestion.options?.map((option) => (
-                    <Button
-                      key={option}
-                      onClick={() => handleAnswer(option)}
-                      variant="outline"
-                      size="lg"
-                      className="w-full text-lg py-8 border-primary/30 hover:bg-primary/20 hover:text-white transition-all duration-200"
-                    >
-                      {option}
-                    </Button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </ShadCard>
-      </CardCanvas>
+      <ShadCard key={currentQuestionIndex} className="p-6 md:p-8 bg-slate-900/30 backdrop-blur-md border border-primary/20 rounded-2xl shadow-lg">
+          <div
+            className="w-full text-center animate-fade-in"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 font-headline">
+              {currentQuestion.text}
+            </h2>
+            
+            {currentQuestion.type === 'slider' ? (
+              <HoursSelector question={currentQuestion} onAnswer={handleAnswer} />
+            ) : (
+              <div className="flex flex-col gap-4">
+                {currentQuestion.options?.map((option) => (
+                  <Button
+                    key={option}
+                    onClick={() => handleAnswer(option)}
+                    variant="outline"
+                    size="lg"
+                    className="w-full text-lg py-8 border-primary/30 bg-transparent hover:bg-primary/20 hover:text-white transition-all duration-200"
+                  >
+                    {option}
+                  </Button>
+                ))}
+              </div>
+            )}
+          </div>
+        </ShadCard>
 
       <Button variant="ghost" onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-white mx-auto">
         <ChevronLeft className="w-4 h-4" />
