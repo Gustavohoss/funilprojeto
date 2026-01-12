@@ -6,6 +6,7 @@ import { QuizSection } from '@/components/quiz-section';
 import { ProcessingSection } from '@/components/processing-section';
 import { OfferSection } from '@/components/offer-section';
 import { analyzeProfileAptitude, type AnalyzeProfileAptitudeOutput } from '@/ai/flows/analyze-profile-aptitude';
+import ProceduralGroundBackground from '@/components/procedural-ground-background';
 
 type Step = 'hero' | 'quiz' | 'processing' | 'offer';
 
@@ -58,14 +59,17 @@ export default function Home() {
 
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-0"></div>
-      <div className="relative z-10 w-full h-full flex items-center justify-center">
-        {step === 'hero' && <HeroSection onStart={handleStartQuiz} />}
-        {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBack} />}
-        {step === 'processing' && <ProcessingSection />}
-        {step === 'offer' && <OfferSection result={analysisResult} onBack={handleGoBack} />}
-      </div>
-    </main>
+    <>
+      <ProceduralGroundBackground isStatic={step !== 'hero'} />
+      <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-0"></div>
+        <div className="relative z-10 w-full h-full flex items-center justify-center">
+          {step === 'hero' && <HeroSection onStart={handleStartQuiz} />}
+          {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBack} />}
+          {step === 'processing' && <ProcessingSection />}
+          {step === 'offer' && <OfferSection result={analysisResult} onBack={handleGoBack} />}
+        </div>
+      </main>
+    </>
   );
 }

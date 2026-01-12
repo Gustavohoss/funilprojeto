@@ -2,12 +2,11 @@
 
 import React, { useEffect, useRef } from 'react';
 
-/**
- * ProceduralGroundBackground
- * A WebGL 2D background featuring topographic neon lines and sand-ripple movement.
- * Optimized for performance using fragment shaders.
- */
-const ProceduralGroundBackground: React.FC = () => {
+type ProceduralGroundBackgroundProps = {
+  isStatic?: boolean;
+};
+
+const ProceduralGroundBackground: React.FC<ProceduralGroundBackgroundProps> = ({ isStatic = false }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -28,6 +27,7 @@ const ProceduralGroundBackground: React.FC = () => {
       precision highp float;
       uniform float u_time;
       uniform vec2 u_resolution;
+      uniform bool u_is_static;
       
       // Cores do tema
       uniform vec3 u_color_primary;
@@ -58,7 +58,7 @@ const ProceduralGroundBackground: React.FC = () => {
         float ripples = sin(gridUv.y * 18.0 + n * 8.0 + u_time * 0.5);
         
         // Neon Topographic Lines
-        float topoLine = smoothstep(0.05, 0.0, abs(ripples));
+        float topoLine = smoothstep(0.1, 0.05, abs(ripples));
         
         // Composite
         vec3 finalColor = mix(u_color_background, vec3(0.0,0.0,0.0), n * 0.6);
@@ -67,9 +67,9 @@ const ProceduralGroundBackground: React.FC = () => {
         // Pulsating green light from below for mobile
         float screenRatio = u_resolution.y / u_resolution.x;
         if (screenRatio > 1.0) { // Simple check for portrait mode (mobile)
-          float pulse = 0.5 + 0.5 * sin(u_time * 1.5);
-          float glow = smoothstep(1.5, -0.5, uv.y);
-          finalColor += u_color_primary * glow * pulse * 0.7;
+          float pulse = u_is_static ? 1.0 : 0.5 + 0.5 * sin(u_time * 1.5);
+          float glow = smoothstep(1.8, -0.5, uv.y);
+          finalColor += u_color_primary * glow * pulse * 1.5;
         }
 
         // Horizon Fog / Fade
@@ -122,6 +122,7 @@ const ProceduralGroundBackground: React.FC = () => {
 
     const timeLoc = gl.getUniformLocation(program, "u_time");
     const resLoc = gl.getUniformLocation(program, "u_resolution");
+    const isStaticLoc = gl.getUniformLocation(program, "u_is_static");
     const primaryColorLoc = gl.getUniformLocation(program, "u_color_primary");
     const backgroundColorLoc = gl.getUniformLocation(program, "u_color_background");
 
@@ -175,6 +176,7 @@ const ProceduralGroundBackground: React.FC = () => {
 
       gl.uniform1f(timeLoc, time * 0.001);
       gl.uniform2f(resLoc, width, height);
+      gl.uniform1i(isStaticLoc, isStatic ? 1 : 0);
       gl.uniform3f(primaryColorLoc, pr, pg, pb);
       gl.uniform3f(backgroundColorLoc, br, bg, bb);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -186,7 +188,7 @@ const ProceduralGroundBackground: React.FC = () => {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isStatic]);
 
   return (
     <div className="fixed inset-0 w-full h-full -z-10">
