@@ -58,7 +58,7 @@ const ProceduralGroundBackground: React.FC = () => {
         float ripples = sin(gridUv.y * 18.0 + n * 8.0 + u_time * 0.5);
         
         // Neon Topographic Lines
-        float topoLine = smoothstep(0.02, 0.0, abs(ripples));
+        float topoLine = smoothstep(0.05, 0.0, abs(ripples));
         
         // Composite
         vec3 finalColor = mix(u_color_background, vec3(0.0,0.0,0.0), n * 0.6);
@@ -68,8 +68,8 @@ const ProceduralGroundBackground: React.FC = () => {
         float screenRatio = u_resolution.y / u_resolution.x;
         if (screenRatio > 1.0) { // Simple check for portrait mode (mobile)
           float pulse = 0.5 + 0.5 * sin(u_time * 1.5);
-          float glow = smoothstep(2.0, -1.0, uv.y);
-          finalColor += u_color_primary * glow * pulse * 0.5;
+          float glow = smoothstep(1.5, -0.5, uv.y);
+          finalColor += u_color_primary * glow * pulse * 0.7;
         }
 
         // Horizon Fog / Fade
