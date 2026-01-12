@@ -24,6 +24,15 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
   const [hours, setHours] = useState(1);
   const dailyEarning = hours * 200;
   const monthlyEarning = dailyEarning * 30;
+  const annualEarning = monthlyEarning * 12;
+
+  const getAnnualGoal = (earning: number) => {
+    if (earning > 200000) return "comprar um imóvel";
+    if (earning > 80000) return "comprar um carro novo";
+    if (earning > 30000) return "fazer a viagem dos sonhos";
+    if (earning > 10000) return "trocar de celular por um top de linha";
+    return "ter uma ótima renda extra";
+  }
 
   return (
     <div className="flex flex-col gap-6 items-center">
@@ -39,18 +48,27 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
         <p className="text-lg text-slate-300">Horas por dia: <span className="font-bold text-white">{hours}h</span></p>
       </div>
 
-      <div className="flex flex-row gap-4 w-full justify-around">
-        <div className="text-center p-3 md:p-4 bg-primary/10 rounded-lg border border-primary/20 flex-1">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 w-full justify-around">
+        <div className="text-center p-2 md:p-4 bg-primary/10 rounded-lg border border-primary/20">
           <p className="text-xs md:text-sm text-slate-300">Potencial de Ganhos</p>
-          <p className="text-lg md:text-2xl font-bold text-primary">por DIA</p>
-          <p className="text-2xl md:text-4xl font-bold text-white">R$ {dailyEarning.toLocaleString('pt-BR')}</p>
+          <p className="text-base md:text-xl font-bold text-primary">por DIA</p>
+          <p className="text-xl md:text-3xl font-bold text-white">R$ {dailyEarning.toLocaleString('pt-BR')}</p>
         </div>
-        <div className="text-center p-3 md:p-4 bg-white/5 rounded-lg flex-1">
+        <div className="text-center p-2 md:p-4 bg-white/5 rounded-lg">
           <p className="text-xs md:text-sm text-slate-300">Potencial de Ganhos</p>
-          <p className="text-lg md:text-2xl font-bold text-slate-300">por MÊS</p>
-          <p className="text-2xl md:text-4xl font-bold text-white">R$ {monthlyEarning.toLocaleString('pt-BR')}</p>
+          <p className="text-base md:text-xl font-bold text-slate-300">por MÊS</p>
+          <p className="text-xl md:text-3xl font-bold text-white">R$ {monthlyEarning.toLocaleString('pt-BR')}</p>
+        </div>
+        <div className="col-span-2 md:col-span-1 text-center p-2 md:p-4 bg-white/5 rounded-lg">
+          <p className="text-xs md:text-sm text-slate-300">Potencial de Ganhos</p>
+          <p className="text-base md:text-xl font-bold text-slate-300">por ANO</p>
+          <p className="text-xl md:text-3xl font-bold text-white">R$ {annualEarning.toLocaleString('pt-BR')}</p>
         </div>
       </div>
+
+      <p className="text-center text-slate-400 mt-2 text-sm md:text-base">
+        Em um ano, você poderia <span className="font-bold text-slate-200">{getAnnualGoal(annualEarning)}</span>.
+      </p>
       
       <Button
         onClick={() => onAnswer(hours)}
