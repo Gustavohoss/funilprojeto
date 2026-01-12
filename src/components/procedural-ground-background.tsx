@@ -58,11 +58,11 @@ const ProceduralGroundBackground: React.FC = () => {
         float ripples = sin(gridUv.y * 18.0 + n * 8.0 + u_time * 0.5);
         
         // Neon Topographic Lines
-        float topoLine = smoothstep(0.03, 0.0, abs(ripples));
+        float topoLine = smoothstep(0.02, 0.0, abs(ripples));
         
         // Composite
         vec3 finalColor = mix(u_color_background, vec3(0.0,0.0,0.0), n * 0.6);
-        finalColor += topoLine * u_color_primary * depth * 0.4;
+        finalColor += topoLine * u_color_primary * depth * 0.8;
         
         // Horizon Fog / Fade
         float fade = smoothstep(0.1, -1.0, uv.y);
@@ -122,7 +122,7 @@ const ProceduralGroundBackground: React.FC = () => {
     const backgroundColor = rootStyles.getPropertyValue('--background').trim();
 
     function hslToRgb(hsl: string): [number, number, number] {
-      const match = /hsl\(([\d\.]+)\s+([\d\.]+)%\s+([\d\.]+)%\)/.exec(hsl);
+      const match = /hsl\(([\d\.]+)\s+([\d\.]+)%\s+([\d\.]+)%\)/.exec(hsl) || /([\d\.]+)\s+([\d\.]+)%\s+([\d\.]+)%/.exec(hsl);
       if (!match) return [0, 0, 0];
       let h = parseFloat(match[1]);
       let s = parseFloat(match[2]) / 100;
@@ -152,8 +152,8 @@ const ProceduralGroundBackground: React.FC = () => {
       return [r, g, b];
     }
     
-    const [pr, pg, pb] = hslToRgb(`hsl(${primaryColor})`);
-    const [br, bg, bb] = hslToRgb(`hsl(${backgroundColor})`);
+    const [pr, pg, pb] = hslToRgb(primaryColor);
+    const [br, bg, bb] = hslToRgb(backgroundColor);
 
 
     let animationFrameId: number;
