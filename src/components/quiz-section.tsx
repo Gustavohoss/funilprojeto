@@ -17,7 +17,7 @@ const questions = [
   { id: 'daily_internet_access', text: 'Você possui acesso à internet pelo menos 30 min por dia?', options: ['Sim', 'Não'] },
   { id: 'tech_familiarity', text: 'Qual seu nível de familiaridade com tecnologia?', options: ['Iniciante', 'Intermediário', 'Avançado'] },
   { id: 'work_hours', text: 'Quantas horas por dia você pode se dedicar?', type: 'slider', min: 0, max: 15, step: 1 },
-  { id: 'learning_willingness', text: 'Você está disposto(a) a aprender novas habilidades para atingir seus objetivos?', options: ['Com certeza!', 'Talvez, dependendo do esforço', 'Não muito'] },
+  { id: 'learning_willingness', text: 'Você está disposto(a) a aprender novas habilidades para atingir seus objetivos?', options: ['Com certeza!', 'Dependendo do esforço', 'Não muito'] },
 ];
 
 function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value: number) => void }) {
