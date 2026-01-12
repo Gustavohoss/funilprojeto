@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
 import { ChevronLeft } from "lucide-react";
-import { ProcessingSection } from "./processing-section";
 
 type QuizSectionProps = {
   onComplete: (answers: Record<string, any>) => void;
@@ -22,7 +21,6 @@ const questions = [
 export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
-  const [isTransitioning, setIsTransitioning] = useState(false);
   
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
   const currentQuestion = questions[currentQuestionIndex];
@@ -30,26 +28,13 @@ export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
   const handleAnswer = (answer: string) => {
     const newAnswers = { ...answers, [currentQuestion.id]: answer };
     setAnswers(newAnswers);
-    
-    setIsTransitioning(true);
 
-    setTimeout(() => {
-      if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setIsTransitioning(false);
-      } else {
-        onComplete(newAnswers);
-      }
-    }, 2000);
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      onComplete(newAnswers);
+    }
   };
-
-  if (isTransitioning) {
-    return (
-        <div className="w-full max-w-2xl flex flex-col gap-8 animate-fade-in">
-            <ProcessingSection />
-        </div>
-    );
-  }
 
   return (
     <div className="w-full max-w-2xl flex flex-col gap-8 animate-fade-in">
