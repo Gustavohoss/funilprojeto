@@ -67,9 +67,9 @@ const ProceduralGroundBackground: React.FC = () => {
         // Pulsating green light from below for mobile
         float screenRatio = u_resolution.y / u_resolution.x;
         if (screenRatio > 1.0) { // Simple check for portrait mode (mobile)
-          float pulse = 0.5 + 0.5 * sin(u_time * 2.0);
-          float glow = smoothstep(0.8, -0.2, uv.y);
-          finalColor += u_color_primary * glow * pulse * 0.25;
+          float pulse = 0.5 + 0.5 * sin(u_time * 1.5);
+          float glow = smoothstep(1.0, -0.5, uv.y);
+          finalColor += u_color_primary * glow * pulse * 0.4;
         }
 
         // Horizon Fog / Fade
