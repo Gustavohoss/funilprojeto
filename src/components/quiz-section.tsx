@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Card } from "@/components/ui/card";
+import { Card as ShadCard } from "@/components/ui/card";
+import { CardCanvas, Card } from "@/components/ui/animated-glow-card";
 import { ChevronLeft } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
@@ -66,7 +67,27 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
 export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
+  const cardRef = useRef<HTMLDivElement>(null);
   
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    };
+
+    card.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      card.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -88,32 +109,37 @@ export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
         <Progress value={progress} className="h-2 bg-gray-800 [&>div]:bg-primary transition-all duration-300" />
       </div>
 
-      <Card 
-        key={currentQuestionIndex}
-        className="glassmorphism w-full text-center animate-fade-in"
-      >
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 font-headline">
-          {currentQuestion.text}
-        </h2>
-        
-        {currentQuestion.type === 'slider' ? (
-          <HoursSelector question={currentQuestion} onAnswer={handleAnswer} />
-        ) : (
-          <div className="flex flex-col gap-4">
-            {currentQuestion.options?.map((option) => (
-              <Button
-                key={option}
-                onClick={() => handleAnswer(option)}
-                variant="outline"
-                size="lg"
-                className="w-full text-lg py-8 border-primary/30 hover:bg-primary/20 hover:text-white transition-all duration-200"
-              >
-                {option}
-              </Button>
-            ))}
-          </div>
-        )}
-      </Card>
+      <CardCanvas>
+        <div ref={cardRef}>
+          <Card key={currentQuestionIndex}>
+            <div
+              className="w-full text-center animate-fade-in"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 font-headline">
+                {currentQuestion.text}
+              </h2>
+              
+              {currentQuestion.type === 'slider' ? (
+                <HoursSelector question={currentQuestion} onAnswer={handleAnswer} />
+              ) : (
+                <div className="flex flex-col gap-4">
+                  {currentQuestion.options?.map((option) => (
+                    <Button
+                      key={option}
+                      onClick={() => handleAnswer(option)}
+                      variant="outline"
+                      size="lg"
+                      className="w-full text-lg py-8 border-primary/30 hover:bg-primary/20 hover:text-white transition-all duration-200"
+                    >
+                      {option}
+                    </Button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </Card>
+        </div>
+      </CardCanvas>
 
       <Button variant="ghost" onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-white mx-auto">
         <ChevronLeft className="w-4 h-4" />
