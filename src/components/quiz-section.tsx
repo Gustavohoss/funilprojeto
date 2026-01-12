@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card as ShadCard } from "@/components/ui/card";
-import { CardCanvas, Card } from "@/components/ui/animated-glow-card";
+import { CardCanvas } from "@/components/ui/animated-glow-card";
 import { ChevronLeft } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
@@ -67,27 +67,7 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
 export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
-  const cardRef = useRef<HTMLDivElement>(null);
   
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-    };
-
-    card.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      card.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -110,8 +90,7 @@ export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
       </div>
 
       <CardCanvas>
-        <div ref={cardRef}>
-          <Card key={currentQuestionIndex}>
+        <ShadCard key={currentQuestionIndex} className="p-8 bg-transparent border-none">
             <div
               className="w-full text-center animate-fade-in"
             >
@@ -137,8 +116,7 @@ export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
                 </div>
               )}
             </div>
-          </Card>
-        </div>
+          </ShadCard>
       </CardCanvas>
 
       <Button variant="ghost" onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-white mx-auto">
