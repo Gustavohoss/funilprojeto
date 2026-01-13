@@ -10,7 +10,7 @@ type SocialProofSectionProps = {
 export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-8 max-w-lg animate-fade-in">
-        <h2 className="text-2xl md:text-4xl font-bold text-white font-headline">
+        <h2 className="text-2xl md:text-4xl font-bold text-white font-headline [text-shadow:0_0_15px_hsl(var(--primary)/0.5)]">
             Veja o que nossos membros estão alcançando...
         </h2>
 
