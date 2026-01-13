@@ -14,11 +14,13 @@ export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
             Veja o que nossos membros estão alcançando...
         </h2>
 
-        <div className="relative w-full aspect-[9/16] max-w-xs overflow-hidden rounded-xl shadow-lg border-2 border-primary/30 mt-4 shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
+        <div className="w-full max-w-xs overflow-hidden rounded-xl shadow-lg border-2 border-primary/30 mt-4 shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
              <Image
                 src="https://s3.typebot.io/public/workspaces/cmj62bxvv000fju04wwudfwgk/typebots/u2v6f22bvdar3qy5qy44pti8/blocks/cc3wq86b2w6y9pr7ofjz7z5m?v=1768273326453"
                 alt="Prova social de resultado de um membro do Protocolo Renda IA"
-                layout="fill"
+                width={400}
+                height={866}
+                layout="responsive"
                 objectFit="contain"
                 className="rounded-lg"
             />
