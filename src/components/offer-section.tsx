@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Sparkles, BadgeCheck, ChevronLeft, CheckCircle2 } from "lucide-react";
+import { Sparkles, BadgeCheck, ChevronLeft, CheckCircle2, Loader2 } from "lucide-react";
 import { CountdownTimer } from "./countdown-timer";
 import type { AnalyzeProfileAptitudeOutput } from "@/ai/flows/analyze-profile-aptitude";
+import { createPaymentOffer } from '@/app/actions/create-payment-offer';
+import { useToast } from '@/hooks/use-toast';
 
 type OfferSectionProps = {
   result: AnalyzeProfileAptitudeOutput | null;
@@ -22,11 +24,31 @@ const unlockedModules = [
 
 export function OfferSection({ result, onBack }: OfferSectionProps) {
   const [priceRevealed, setPriceRevealed] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const { toast } = useToast();
+
   const score = result?.compatibilityScore ?? 92;
   const feedback = result?.feedback ?? "Seu perfil tem alta compatibilidade com nosso método. Você está pronto para começar a lucrar com IA.";
 
+  const handlePayment = async () => {
+    setIsProcessingPayment(true);
+    try {
+      const { checkoutUrl } = await createPaymentOffer();
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Erro ao gerar pagamento",
+        description: "Não foi possível criar o link de pagamento. Por favor, tente novamente.",
+      });
+      setIsProcessingPayment(false);
+    }
+  };
+
+
   return (
-    <div className="flex flex-col items-center justify-center text-center gap-4 max-w-2xl animate-fade-in">
+    <div className="w-full flex flex-col items-center justify-start text-center gap-4 max-w-2xl animate-fade-in">
         <div className="bg-primary/20 text-primary font-bold py-1 px-4 rounded-full flex items-center gap-2">
             <Sparkles className="w-4 h-4" />
             COMPATIBILIDADE: {score}%
@@ -68,9 +90,15 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
 
                         <Button 
                             size="lg" 
+                            onClick={handlePayment}
+                            disabled={isProcessingPayment}
                             className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
                         >
-                            RESGATAR ACESSO AGORA
+                            {isProcessingPayment ? (
+                                <Loader2 className="w-6 h-6 animate-spin" />
+                            ) : (
+                                "RESGATAR ACESSO AGORA"
+                            )}
                         </Button>
                         <CountdownTimer />
                     </div>

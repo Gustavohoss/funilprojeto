@@ -36,6 +36,11 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  env: {
+    CAKTO_CLIENT_ID: process.env.CAKTO_CLIENT_ID,
+    CAKTO_CLIENT_SECRET: process.env.CAKTO_CLIENT_SECRET,
+    CAKTO_PRODUCT_ID: process.env.CAKTO_PRODUCT_ID,
+  }
 };
 
 export default nextConfig;
