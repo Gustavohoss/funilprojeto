@@ -27,6 +27,8 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
   const annualEarning = monthlyEarning * 12;
 
   const getAnnualGoal = (earning: number) => {
+    if (earning > 1000000) return "alcançar a independência financeira";
+    if (earning > 500000) return "comprar um carro de luxo";
     if (earning > 200000) return "comprar um imóvel";
     if (earning > 80000) return "comprar um carro novo";
     if (earning > 30000) return "fazer a viagem dos sonhos";
