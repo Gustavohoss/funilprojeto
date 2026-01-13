@@ -67,9 +67,9 @@ export default function Home() {
   return (
     <>
       <ProceduralGroundBackground isStatic={step !== 'hero'} />
-      <main className="flex min-h-svh w-full flex-col items-center justify-center p-4 md:p-8 overflow-hidden">
+      <main className="flex min-h-svh w-full flex-col items-center justify-start p-4 md:p-8 overflow-y-auto">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-0"></div>
-        <div className="relative z-10 w-full h-full flex items-center justify-center">
+        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center flex-grow py-8">
           {step === 'hero' && <HeroSection onStart={handleStartQuiz} />}
           {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBack} />}
           {step === 'processing' && <ProcessingSection />}
