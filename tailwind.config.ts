@@ -107,7 +107,11 @@ export default {
         'loading-bar': {
             '0%': { transform: 'translateX(-100%)' },
             '100%': { transform: 'translateX(100%)' },
-        }
+        },
+        'loading-bar-slow': {
+          'from': { width: '0%' },
+          'to': { width: '100%' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -116,6 +120,7 @@ export default {
         'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
         'pulse-subtle': 'pulse-subtle 2s infinite',
         'loading-bar': 'loading-bar 1.5s ease-in-out infinite',
+        'loading-bar-slow': 'loading-bar-slow 5s linear forwards',
       },
       backgroundImage: {
         'grid': "linear-gradient(hsl(var(--primary) / 0.05) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.05) 1px, transparent 1px)",
