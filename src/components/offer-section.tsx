@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sparkles, BadgeCheck, ChevronLeft, CheckCircle2, Loader2 } from "lucide-react";
 import { CountdownTimer } from "./countdown-timer";
-import type { AnalyzeProfileAptitudeOutput } from "@/ai/flows/analyze-profile-aptitude";
+import type { SimulatedAnalysisOutput } from "@/app/page";
 import { createPaymentOffer } from '@/app/actions/create-payment-offer';
 import { useToast } from '@/hooks/use-toast';
 
 type OfferSectionProps = {
-  result: AnalyzeProfileAptitudeOutput | null;
+  result: SimulatedAnalysisOutput | null;
   onBack: () => void;
 };
 
@@ -48,7 +48,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
 
 
   return (
-    <div className="w-full flex flex-col items-center justify-start text-center gap-4 max-w-2xl animate-fade-in">
+    <div className="w-full flex flex-col items-center text-center gap-4 max-w-2xl animate-fade-in">
         <div className="bg-primary/20 text-primary font-bold py-1 px-4 rounded-full flex items-center gap-2">
             <Sparkles className="w-4 h-4" />
             COMPATIBILIDADE: {score}%
