@@ -31,6 +31,7 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
     if (earning > 80000) return "comprar um carro novo";
     if (earning > 30000) return "fazer a viagem dos sonhos";
     if (earning > 10000) return "trocar de celular por um top de linha";
+    if (hours === 0) return "selecione o tempo disponível";
     return "ter uma ótima renda extra";
   }
 
@@ -66,14 +67,19 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
         </div>
       </div>
 
-      <p className="text-center text-slate-400 mt-2 text-sm md:text-base">
-        Em um ano, você poderia <span className="font-bold text-slate-200">{getAnnualGoal(annualEarning)}</span>.
+      <p className="text-center text-slate-400 mt-2 text-sm md:text-base h-5">
+        { hours > 0 ? (
+          <>Em um ano, você poderia <span className="font-bold text-slate-200">{getAnnualGoal(annualEarning)}</span>.</>
+        ) : (
+          <span className="text-amber-500 font-bold">Selecione um tempo para continuar</span>
+        )}
       </p>
       
       <Button
         onClick={() => onAnswer(hours)}
         size="lg"
-        className="w-full mt-4 text-lg font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300"
+        disabled={hours === 0}
+        className="w-full mt-4 text-lg font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed"
       >
         Continuar
       </Button>
