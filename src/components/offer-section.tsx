@@ -44,7 +44,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                 <h2 className="text-2xl font-bold text-white mb-2">Seu perfil foi selecionado.</h2>
                 <p className="text-slate-300 max-w-md mx-auto mb-6">{feedback}</p>
                 
-                <div className="bg-white/5 border border-primary/20 rounded-lg p-4 text-left w-full max-w-sm mx-auto mb-6">
+                <div className="bg-white/5 border border-primary/20 rounded-lg p-4 text-left w-full mb-6">
                     <h3 className="font-bold text-white mb-3 text-center">O que você desbloqueou:</h3>
                     <ul className="space-y-2">
                         {unlockedModules.map((item, index) => (
