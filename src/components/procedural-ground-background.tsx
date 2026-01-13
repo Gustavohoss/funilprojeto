@@ -68,7 +68,7 @@ const ProceduralGroundBackground: React.FC<ProceduralGroundBackgroundProps> = ({
         float screenRatio = u_resolution.y / u_resolution.x;
         if (screenRatio > 1.0) { // Simple check for portrait mode (mobile)
           float pulse = u_is_static ? 1.0 : 0.5 + 0.5 * sin(u_time * 1.5);
-          float glow = smoothstep(1.0, -0.8, uv.y);
+          float glow = smoothstep(1.0, -1.0, uv.y);
           finalColor += u_color_primary * glow * pulse * 1.5;
         }
 

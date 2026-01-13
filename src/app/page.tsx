@@ -61,7 +61,7 @@ export default function Home() {
   return (
     <>
       <ProceduralGroundBackground isStatic={step !== 'hero'} />
-      <main className="flex min-h-screen w-full flex-col items-center justify-center p-4 md:p-8 overflow-hidden">
+      <main className="flex min-h-svh w-full flex-col items-center justify-center p-4 md:p-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-0"></div>
         <div className="relative z-10 w-full h-full flex items-center justify-center">
           {step === 'hero' && <HeroSection onStart={handleStartQuiz} />}
