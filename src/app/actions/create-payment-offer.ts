@@ -1,7 +1,6 @@
 'use server';
 
 import { z } from 'zod';
-import "dotenv/config";
 
 const CreatePaymentOfferOutputSchema = z.object({
   checkoutUrl: z.string().url(),
