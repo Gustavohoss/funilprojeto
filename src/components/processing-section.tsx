@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { HoloPulse } from "@/components/ui/holo-pulse-loader";
 
 const messages = [
     "Analisando perfil...",
@@ -21,14 +22,8 @@ export function ProcessingSection() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center justify-center text-center gap-8 animate-fade-in">
-            <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-primary"></div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white font-headline transition-opacity duration-300">
-                {messages[messageIndex]}
-            </h2>
-            <div className="w-full max-w-md bg-gray-800/50 rounded-full h-2.5 mt-4 overflow-hidden relative">
-                <div className="bg-primary h-2.5 rounded-full absolute left-0 top-0 bottom-0 animate-loading-bar"></div>
-            </div>
+        <div className="flex flex-col items-center justify-center text-center gap-8 animate-fade-in w-full h-full">
+            <HoloPulse messages={messages} currentMessageIndex={messageIndex} />
         </div>
     );
 }
