@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Sparkles, BadgeCheck, ChevronLeft, Cpu, BookOpen, Users, DollarSign, Gift } from "lucide-react";
+import { Sparkles, BadgeCheck, ChevronLeft, Cpu, BookOpen, Users, DollarSign, Gift, Zap } from "lucide-react";
 import { CountdownTimer } from "./countdown-timer";
 import type { SimulatedAnalysisOutput } from "@/app/page";
 
@@ -22,7 +22,7 @@ const unlockedContent = [
   },
   {
     icon: <Cpu className="w-6 h-6 text-primary" />,
-    title: 'BÔNUS: Ferramenta "Cliente Infinito AI"',
+    title: 'BÔNUS #1: Ferramenta "Cliente Infinito AI"',
     description: 'Nosso aplicativo secreto que encontra clientes e cria sites de alta qualidade para eles em minutos.',
     value: 497,
     isBonus: true,
@@ -36,7 +36,7 @@ const unlockedContent = [
   },
   {
     icon: <Users className="w-6 h-6 text-primary" />,
-    title: 'BÔNUS: Comunidade VIP de Membros',
+    title: 'BÔNUS #2: Comunidade VIP de Membros',
     description: 'Acesso exclusivo ao grupo de networking para tirar dúvidas e fazer parcerias.',
     value: 197,
     isBonus: true,
@@ -53,8 +53,8 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
   const feedback = result?.feedback ?? "Seu perfil tem alta compatibilidade com nosso método. Você está pronto para começar a lucrar com IA.";
 
   const handlePayment = () => {
-    // Placeholder for payment logic
-    window.location.href = 'https://checkout.example.com';
+    // Hotmart checkout link placeholder
+    window.location.href = 'https://pay.hotmart.com/EXAMPLE';
   };
 
 
@@ -77,28 +77,26 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                 <h2 className="text-2xl font-bold text-white mb-2">Seu perfil foi selecionado.</h2>
                 <p className="text-slate-300 max-w-md mx-auto mb-6">{feedback}</p>
                 
-                <div className="bg-white/5 border border-primary/20 rounded-lg p-6 text-left w-full mb-6">
-                    <h3 className="font-bold text-white mb-4 text-center text-lg">Ao Entrar no Protocolo, Você Desbloqueia Acesso Imediato a:</h3>
-                    <ul className="space-y-4">
-                        {unlockedContent.map((item, index) => (
-                            <li key={index} className="flex items-start gap-4 text-slate-300 border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
-                                <div className="p-2 bg-primary/10 rounded-md mt-1">{item.icon}</div>
-                                <div className="flex-1">
-                                    <div className="flex justify-between items-center">
-                                        <h4 className="font-bold text-white">{item.title}</h4>
-                                        <span className="text-sm text-slate-400 line-through">R$ {item.value.toFixed(2).replace('.', ',')}</span>
-                                    </div>
-                                    <p className="text-sm text-slate-400">{item.description}</p>
-                                    {item.isBonus && (
-                                        <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-primary bg-primary/20 px-2 py-1 rounded-full">
-                                            <Gift className="w-3 h-3" />
-                                            BÔNUS
-                                        </div>
-                                    )}
+                <div className="w-full text-left space-y-4 mb-6">
+                    <h3 className="font-bold text-white mb-2 text-center text-xl">Ao Entrar no Protocolo, Você Desbloqueia:</h3>
+                    {unlockedContent.map((item, index) => (
+                        <div key={index} className="flex items-start gap-4 text-slate-300 bg-white/5 p-4 rounded-lg border border-white/10 hover:border-primary/50 transition-all">
+                            <div className="p-3 bg-primary/10 rounded-full mt-1 border border-primary/20">{item.icon}</div>
+                            <div className="flex-1">
+                                <div className="flex justify-between items-start">
+                                    <h4 className="font-bold text-white leading-tight">{item.title}</h4>
+                                    <span className="text-sm text-slate-400 line-through whitespace-nowrap ml-4">R$ {item.value.toFixed(2).replace('.', ',')}</span>
                                 </div>
-                            </li>
-                        ))}
-                    </ul>
+                                <p className="text-sm text-slate-400 mt-1">{item.description}</p>
+                                {item.isBonus && (
+                                    <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-primary bg-primary/20 px-2 py-1 rounded-full">
+                                        <Gift className="w-3 h-3" />
+                                        BÔNUS ESPECIAL
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ))}
                 </div>
 
 
@@ -106,17 +104,20 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                     <div className="w-full animate-fade-in space-y-6">
                         <p className="text-slate-200 text-lg">O acesso ao método completo foi liberado com <span className="font-bold text-primary">desconto especial</span> por tempo limitado.</p>
 
-                        <div>
-                            <p className="text-slate-400 line-through">De R$ {totalValue.toFixed(2).replace('.', ',')}</p>
-                            <p className="text-5xl font-bold text-white">por apenas R$ 9,90</p>
+                        <div className="bg-gradient-to-t from-primary/10 to-transparent p-6 rounded-lg border border-primary/20">
+                            <p className="text-slate-400 line-through text-xl">De R$ {totalValue.toFixed(2).replace('.', ',')}</p>
+                            <p className="text-white font-bold"><span className="text-5xl">12x de R$ 9,74</span></p>
+                            <p className="text-slate-300 text-sm">ou R$ 97,00 à vista</p>
                         </div>
+                        
 
                         <Button 
                             size="lg" 
                             onClick={handlePayment}
                             className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
                         >
-                            RESGATAR ACESSO AGORA
+                            <Zap className="w-5 h-5 -ml-2 mr-2" />
+                            RESGATAR ACESSO COM DESCONTO
                         </Button>
                         <CountdownTimer />
                     </div>
