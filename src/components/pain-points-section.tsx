@@ -10,9 +10,9 @@ type PainPointsSectionProps = {
 };
 
 const painPoints = [
-    { icon: <XCircle className="text-destructive/80 w-6 h-6" />, text: "Sente que está ficando para trás na tecnologia?" },
-    { icon: <XCircle className="text-destructive/80 w-6 h-6" />, text: "Já tentou de tudo para ganhar dinheiro online e falhou?" },
-    { icon: <XCircle className="text-destructive/80 w-6 h-6" />, text: "Acha que IA é muito complicado para você?" },
+    { icon: <XCircle className="text-destructive w-6 h-6 [text-shadow:0_0_8px_hsl(var(--destructive))]" />, text: "Sente que está ficando para trás na tecnologia?" },
+    { icon: <XCircle className="text-destructive w-6 h-6 [text-shadow:0_0_8px_hsl(var(--destructive))]" />, text: "Já tentou de tudo para ganhar dinheiro online e falhou?" },
+    { icon: <XCircle className="text-destructive w-6 h-6 [text-shadow:0_0_8px_hsl(var(--destructive))]" />, text: "Acha que IA é muito complicado para você?" },
 ]
 
 export function PainPointsSection({ onComplete, onBack }: PainPointsSectionProps) {
@@ -22,7 +22,7 @@ export function PainPointsSection({ onComplete, onBack }: PainPointsSectionProps
             Você se identifica com algum destes problemas?
         </h2>
 
-        <Card className="bg-slate-900/30 backdrop-blur-md border border-destructive/20 p-6 md:p-8 rounded-2xl shadow-lg w-full text-left space-y-4">
+        <Card className="bg-slate-900/30 backdrop-blur-md border border-destructive/20 p-6 md:p-8 rounded-2xl shadow-lg w-full text-left space-y-4 shadow-[0_0_20px_hsl(var(--destructive)/0.25)]">
             {painPoints.map((point, index) => (
                 <div key={index} className="flex items-center gap-4 text-slate-300 text-lg">
                     {point.icon}
