@@ -15,9 +15,7 @@ const painPoints = [
 ];
 
 const GlassCard = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative w-full h-full p-4 sm:p-6 text-center bg-black/30 backdrop-blur-lg border border-white/10 rounded-2xl shadow-lg overflow-hidden">
-    <div className="absolute top-0 left-0 w-[70%] h-[70%] border-t-2 border-l-2 border-primary/70 rounded-tl-2xl" />
-    <div className="absolute bottom-0 right-0 w-[70%] h-[70%] border-b-2 border-r-2 border-primary/70 rounded-br-2xl" />
+  <div className="relative w-full h-full p-4 sm:p-6 text-center bg-primary/10 backdrop-blur-md border border-primary/20 rounded-2xl shadow-lg transition-all duration-300 hover:border-primary/40 hover:bg-primary/20">
     <div className="relative z-10 flex flex-col items-center justify-start text-center gap-4 h-full">
       {children}
     </div>
