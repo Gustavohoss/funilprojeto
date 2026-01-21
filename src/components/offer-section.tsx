@@ -106,8 +106,8 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
 
                         <div className="bg-gradient-to-t from-primary/10 to-transparent p-6 rounded-lg border border-primary/20">
                             <p className="text-slate-400 line-through text-xl">De R$ {totalValue.toFixed(2).replace('.', ',')}</p>
-                            <p className="text-white font-bold"><span className="text-5xl">12x de R$ 9,74</span></p>
-                            <p className="text-slate-300 text-sm">ou R$ 97,00 à vista</p>
+                            <p className="text-white font-bold"><span className="text-5xl">12x de R$ 19,90</span></p>
+                            <p className="text-slate-300 text-sm">ou R$ 197,00 à vista</p>
                         </div>
                         
 
