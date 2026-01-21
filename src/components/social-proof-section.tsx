@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 
 type SocialProofSectionProps = {
   onComplete: () => void;
@@ -33,7 +34,8 @@ export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
             size="lg"
             className="w-full max-w-xs text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
         >
-            QUERO ENTENDER O MECANISMO
+            DESTRAVAR MINHA OFERTA
+            <ArrowRight className="w-5 h-5 ml-2" />
         </Button>
     </div>
   );
