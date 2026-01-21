@@ -35,8 +35,6 @@ export default function Home() {
       setStep('quiz');
     } else if (step === 'socialProof') {
       setStep('quiz');
-    } else if (step === 'painPoints') {
-      setStep('socialProof');
     }
   }
 
@@ -82,7 +80,7 @@ export default function Home() {
           {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBack} />}
           {step === 'processing' && <ProcessingSection />}
           {step === 'socialProof' && <SocialProofSection onComplete={handleSocialProofComplete} />}
-          {step === 'painPoints' && <PainPointsSection onComplete={handlePainPointsComplete} onBack={handleGoBack} />}
+          {step === 'painPoints' && <PainPointsSection onComplete={handlePainPointsComplete} />}
           {step === 'offer' && <OfferSection result={analysisResult} onBack={handleGoBack} />}
         </div>
       </main>

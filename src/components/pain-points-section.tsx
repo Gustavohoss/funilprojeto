@@ -1,11 +1,10 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Settings, DollarSign, BrainCircuit, ArrowRight, ChevronLeft } from 'lucide-react';
+import { Settings, DollarSign, BrainCircuit, ArrowRight } from 'lucide-react';
 
 type PainPointsSectionProps = {
   onComplete: () => void;
-  onBack: () => void;
 };
 
 const painPoints = [
@@ -23,7 +22,7 @@ const GlassCard = ({ children }: { children: React.ReactNode }) => (
 );
 
 
-export function PainPointsSection({ onComplete, onBack }: PainPointsSectionProps) {
+export function PainPointsSection({ onComplete }: PainPointsSectionProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-8 max-w-3xl animate-fade-in">
         <h2 className="text-3xl md:text-5xl font-bold text-white font-headline [text-shadow:0_0_15px_hsl(var(--primary)/0.5)]">
@@ -56,11 +55,6 @@ export function PainPointsSection({ onComplete, onBack }: PainPointsSectionProps
                 QUERO CONHECER A SOLUÇÃO
             </Button>
         </div>
-        
-        <Button variant="ghost" onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-white mx-auto mt-2">
-            <ChevronLeft className="w-4 h-4" />
-            Voltar
-        </Button>
     </div>
   );
 }
