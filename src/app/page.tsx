@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { HeroSection } from '@/components/hero-section';
 import { QuizSection } from '@/components/quiz-section';
 import { ProcessingSection } from '@/components/processing-section';
@@ -16,16 +16,30 @@ export interface SimulatedAnalysisOutput {
   feedback: string;
 }
 
+const ORIGINAL_TITLE = 'AI Profit Decoder';
+
 export default function Home() {
   const [step, setStep] = useState<Step>('hero');
   const [quizAnswers, setQuizAnswers] = useState<Record<string, any>>({});
   const [analysisResult, setAnalysisResult] = useState<SimulatedAnalysisOutput | null>(null);
+
+  const updateTitleWithEarnings = useCallback((hours: number | null) => {
+    if (typeof window !== 'undefined') {
+      if (hours === null || hours === 0) {
+        document.title = ORIGINAL_TITLE;
+      } else {
+        const monthlyEarning = hours * 200 * 30;
+        document.title = `Potencial de R$ ${monthlyEarning.toLocaleString('pt-BR')}/mês | ${ORIGINAL_TITLE}`;
+      }
+    }
+  }, []);
 
   const handleStartQuiz = () => {
     setStep('quiz');
   };
 
   const handleGoBack = () => {
+    updateTitleWithEarnings(null);
     if (step === 'quiz') {
       setStep('hero');
     } else if (step === 'offer') {
@@ -48,6 +62,9 @@ export default function Home() {
 
   useEffect(() => {
     if (step === 'processing' && Object.keys(quizAnswers).length > 0) {
+      // Reset title when processing starts
+      updateTitleWithEarnings(null);
+      
       const runAnalysis = async () => {
         // Simula um tempo de processamento mínimo
         await new Promise(resolve => setTimeout(resolve, 4000));
@@ -63,7 +80,7 @@ export default function Home() {
       };
       runAnalysis();
     }
-  }, [step, quizAnswers]);
+  }, [step, quizAnswers, updateTitleWithEarnings]);
 
 
   return (
@@ -72,7 +89,7 @@ export default function Home() {
       <main className="flex min-h-svh w-full flex-col items-center p-4 md:p-8 overflow-y-auto">
         <div className="relative z-10 w-full h-full flex flex-col items-center justify-center flex-grow py-8">
           {step === 'hero' && <HeroSection onStart={handleStartQuiz} />}
-          {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBack} />}
+          {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBack} onHoursChange={updateTitleWithEarnings} />}
           {step === 'processing' && <ProcessingSection />}
           {step === 'socialProof' && <SocialProofSection onComplete={handleSocialProofComplete} />}
           {step === 'offer' && <OfferSection result={analysisResult} onBack={handleGoBack} />}

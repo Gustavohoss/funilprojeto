@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider";
 type QuizSectionProps = {
   onComplete: (answers: Record<string, any>) => void;
   onBack: () => void;
+  onHoursChange?: (hours: number) => void;
 };
 
 const questions = [
@@ -20,11 +21,17 @@ const questions = [
   { id: 'learning_willingness', text: 'Você está disposto(a) a aprender novas habilidades para atingir seus objetivos?', options: ['Com certeza!', 'Dependendo do esforço', 'Não muito'] },
 ];
 
-function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value: number) => void }) {
+function HoursSelector({ question, onAnswer, onHoursChange }: { question: any, onAnswer: (value: number) => void, onHoursChange?: (hours: number) => void }) {
   const [hours, setHours] = useState(1);
   const dailyEarning = hours * 200;
   const monthlyEarning = dailyEarning * 30;
   const annualEarning = monthlyEarning * 12;
+
+  useEffect(() => {
+    if (onHoursChange) {
+      onHoursChange(hours);
+    }
+  }, [hours, onHoursChange]);
 
   const getAnnualGoal = (earning: number) => {
     if (earning > 1000000) return "alcançar a independência financeira";
@@ -90,7 +97,7 @@ function HoursSelector({ question, onAnswer }: { question: any, onAnswer: (value
 }
 
 
-export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
+export function QuizSection({ onComplete, onBack, onHoursChange }: QuizSectionProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   
@@ -124,7 +131,7 @@ export function QuizSection({ onComplete, onBack }: QuizSectionProps) {
             </h2>
             
             {currentQuestion.type === 'slider' ? (
-              <HoursSelector question={currentQuestion} onAnswer={handleAnswer} />
+              <HoursSelector question={currentQuestion} onAnswer={handleAnswer} onHoursChange={onHoursChange} />
             ) : (
               <div className="flex flex-col gap-4">
                 {currentQuestion.options?.map((option) => (
