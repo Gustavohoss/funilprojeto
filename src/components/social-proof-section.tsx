@@ -11,7 +11,7 @@ export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-8 max-w-lg animate-fade-in">
         <h2 className="text-2xl md:text-4xl font-bold text-white font-headline [text-shadow:0_0_15px_hsl(var(--primary)/0.5)]">
-            Este é o tipo de resultado que o "Cliente Infinito AI" gera.
+            Resultados como este não acontecem por acaso.
         </h2>
 
         <div className="w-full max-w-xs overflow-hidden rounded-xl shadow-lg border-2 border-primary/30 mt-4 shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
@@ -26,7 +26,7 @@ export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
             />
         </div>
       
-        <p className="text-md text-slate-300">Isso não é sorte. É a prova de que o método funciona. Outros já estão colhendo os frutos. Agora, a decisão de se juntar a eles é sua.</p>
+        <p className="text-md text-slate-300">Isto é a prova de que o Mecanismo Único funciona. Enquanto você hesita, outros membros já estão transformando minutos em PIX. A decisão de se juntar a eles e parar de ser um espectador é sua.</p>
 
         <Button
             onClick={onComplete}
