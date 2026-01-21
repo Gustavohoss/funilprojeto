@@ -10,7 +10,7 @@ export function HeroSection({ onStart }: HeroSectionProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-6 max-w-3xl animate-fade-in">
       <h1 className="text-4xl md:text-6xl font-bold text-white font-headline leading-tight">
-        PROTOCOLO RENDA IA: <span className="text-primary">Descubra se seu perfil é compatível</span> para lucrar com Inteligência Artificial
+        PROTOCOLO RENDA IA: <span className="text-primary">Calcule seu Potencial de Ganhos</span> com Inteligência Artificial
       </h1>
       <p className="text-lg md:text-xl text-slate-300">
         Faça o teste de aptidão oficial
