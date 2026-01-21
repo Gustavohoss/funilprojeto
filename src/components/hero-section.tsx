@@ -13,7 +13,7 @@ export function HeroSection({ onStart }: HeroSectionProps) {
         Aviso: A IA está criando uma nova classe de milionários. <span className="text-primary">A questão é: você vai assistir ou vai participar?</span>
       </h1>
       <p className="text-lg md:text-xl text-slate-300">
-        Se você sente que trabalha muito mas não vê o resultado que merece, e teme ficar para trás na maior revolução tecnológica da história, nós entendemos você. Nosso sistema foi projetado para isso, mas não funciona para todos. Responda a 4 perguntas e descubra se seu perfil é compatível.
+        Se você teme ficar para trás na maior revolução tecnológica da história, nós entendemos você. Nosso sistema foi projetado para isso, mas não funciona para todos. Responda a 4 perguntas e descubra se seu perfil é compatível.
       </p>
       <Button 
         onClick={onStart} 
