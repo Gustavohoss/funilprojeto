@@ -10,10 +10,10 @@ export function HeroSection({ onStart }: HeroSectionProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-6 max-w-3xl animate-fade-in">
       <h1 className="text-4xl md:text-6xl font-bold text-white font-headline leading-tight [text-shadow:0_0_15px_hsl(var(--primary)/0.5)] mt-12">
-        PROTOCOLO RENDA IA: <span className="text-primary">Aprenda a Gerar Renda</span> com Inteligência Artificial
+        O Futuro da Renda é Artificial. <span className="text-primary">Domine a IA Agora</span> ou Fique Para Trás.
       </h1>
       <p className="text-lg md:text-xl text-slate-300">
-        Faça o teste de aptidão oficial
+        Faça a análise de aptidão e descubra se nosso sistema <span className="font-bold text-white">"Cliente Infinito AI"</span> é compatível com seu perfil.
       </p>
       <Button 
         onClick={onStart} 

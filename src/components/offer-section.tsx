@@ -16,28 +16,28 @@ const unlockedContent = [
   {
     icon: <BookOpen className="w-6 h-6 text-primary" />,
     title: 'Protocolo Renda IA: O Passo a Passo',
-    description: 'O método completo para criar uma nova fonte de renda com IA, do zero ao primeiro cliente.',
+    description: 'O método completo para transformar horas vagas em uma fonte de renda previśivel, do zero ao seu primeiro cliente de 4 dígitos.',
     value: 297,
     isBonus: false,
   },
   {
     icon: <Cpu className="w-6 h-6 text-primary" />,
-    title: 'BÔNUS #1: Ferramenta "Cliente Infinito AI"',
-    description: 'Nosso aplicativo secreto que encontra clientes e cria sites de alta qualidade para eles em minutos.',
+    title: "BÔNUS #1: Aplicativo 'Cliente Infinito AI'",
+    description: 'Nosso sistema secreto que encontra clientes com fome de soluções e constrói sites para eles em minutos. Este é o nosso Mecanismo Único.',
     value: 497,
     isBonus: true,
   },
   {
     icon: <DollarSign className="w-6 h-6 text-primary" />,
-    title: 'Módulo: Negociação e Vendas de Alto Valor',
-    description: 'Scripts e estratégias para abordar, negociar e fechar contratos de mais de R$1.000.',
+    title: 'Módulo: Scripts de Conversão Validados',
+    description: 'As exatas palavras para abordar, negociar e fechar contratos de mais de R$1.000, mesmo que você odeie "vender".',
     value: 197,
     isBonus: false,
   },
   {
     icon: <Users className="w-6 h-6 text-primary" />,
-    title: 'BÔNUS #2: Comunidade VIP de Membros',
-    description: 'Acesso exclusivo ao grupo de networking para tirar dúvidas e fazer parcerias.',
+    title: 'BÔNUS #2: Acesso à Tribo Secreta',
+    description: 'Você não estará sozinho. Nossa comunidade VIP é onde as parcerias acontecem e as dúvidas são resolvidas em minutos.',
     value: 197,
     isBonus: true,
   },
@@ -74,8 +74,8 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                 <div className="p-4 bg-primary/10 rounded-full border-2 border-primary/50 mb-4 animate-pulse-subtle">
                     <BadgeCheck className="w-12 h-12 text-primary" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">Seu perfil foi selecionado.</h2>
-                <p className="text-slate-300 max-w-md mx-auto mb-6">{feedback}</p>
+                <h2 className="text-2xl font-bold text-white mb-2">Esqueça tudo o que você já viu.</h2>
+                <p className="text-slate-300 max-w-md mx-auto mb-6">Você não precisa de mais um 'curso' complicado. Você precisa de um <span className="font-bold text-white">sistema</span>. E seu perfil foi selecionado para ter acesso a ele.</p>
                 
                 <div className="w-full text-left space-y-4 mb-6">
                     <h3 className="font-bold text-white mb-2 text-center text-xl">Ao Entrar no Protocolo, Você Desbloqueia:</h3>
@@ -102,12 +102,12 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
 
                 {priceRevealed ? (
                     <div className="w-full animate-fade-in space-y-6">
-                        <p className="text-slate-200 text-lg">O acesso ao método completo foi liberado com <span className="font-bold text-primary">desconto especial</span> por tempo limitado.</p>
+                        <p className="text-slate-200 text-lg">Seu acesso ao sistema completo foi liberado com <span className="font-bold text-primary">98% de desconto</span> por tempo limitado.</p>
 
                         <div className="bg-gradient-to-t from-primary/10 to-transparent p-6 rounded-lg border border-primary/20">
                             <p className="text-slate-400 line-through text-xl">De R$ {totalValue.toFixed(2).replace('.', ',')}</p>
                             <p className="text-white font-bold"><span className="text-5xl">R$ 19,90</span></p>
-                            <p className="text-slate-300 text-sm">Pagamento único</p>
+                            <p className="text-slate-300 text-sm">Pagamento único. Acesso vitalício.</p>
                         </div>
                         
 
@@ -117,7 +117,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                             className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
                         >
                             <Zap className="w-5 h-5 -ml-2 mr-2" />
-                            RESGATAR ACESSO COM DESCONTO
+                            SIM, QUERO GARANTIR MINHA VAGA AGORA!
                         </Button>
                         <CountdownTimer />
                     </div>
@@ -132,7 +132,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                           onClick={() => setPriceRevealed(true)}
                           className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
                       >
-                          REVELAR MINHA OFERTA ESPECIAL
+                          QUERO VER MEU DESCONTO DE FUNDADOR
                       </Button>
                   </div>
                 )}
