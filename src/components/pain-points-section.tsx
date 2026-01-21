@@ -31,11 +31,7 @@ export function PainPointsSection({ onComplete, onBack }: PainPointsSectionProps
             ))}
         </Card>
 
-        <div className="w-full">
-            <div className="my-6 border-t border-dashed border-primary/20"></div>
-        </div>
-
-        <div className="flex flex-col items-center gap-4 animate-fade-in">
+        <div className="flex flex-col items-center gap-4 animate-fade-in mt-6">
             <h3 className="text-2xl md:text-4xl font-bold text-primary font-headline">
                 E se existisse um método simples, passo a passo, para transformar a IA em uma fonte de renda previsível?
             </h3>
