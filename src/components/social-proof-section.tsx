@@ -31,7 +31,7 @@ export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
         <Button
             onClick={onComplete}
             size="lg"
-            className="w-full max-w-xs text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 animate-pulse-glow"
+            className="w-full max-w-xs text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
         >
             Quero começar agora!
         </Button>

@@ -18,7 +18,7 @@ export function HeroSection({ onStart }: HeroSectionProps) {
       <Button 
         onClick={onStart} 
         size="lg" 
-        className="mt-4 text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 animate-pulse-glow"
+        className="mt-4 text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
       >
         INICIAR ANÁLISE DE PERFIL
       </Button>

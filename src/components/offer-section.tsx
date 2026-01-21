@@ -86,7 +86,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                     <Button 
                         size="lg" 
                         onClick={() => setPriceRevealed(true)}
-                        className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 animate-pulse-glow"
+                        className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
                     >
                         REVELAR MINHA OFERTA ESPECIAL
                     </Button>
