@@ -6,10 +6,9 @@ import { QuizSection } from '@/components/quiz-section';
 import { ProcessingSection } from '@/components/processing-section';
 import { OfferSection } from '@/components/offer-section';
 import { SocialProofSection } from '@/components/social-proof-section';
-import { PainPointsSection } from '@/components/pain-points-section';
 import ProceduralGroundBackground from '@/components/procedural-ground-background';
 
-type Step = 'hero' | 'quiz' | 'processing' | 'socialProof' | 'painPoints' | 'offer';
+type Step = 'hero' | 'quiz' | 'processing' | 'socialProof' | 'offer';
 
 // Definindo o tipo para o resultado da análise simulada
 export interface SimulatedAnalysisOutput {
@@ -44,10 +43,6 @@ export default function Home() {
   };
   
   const handleSocialProofComplete = () => {
-    setStep('painPoints');
-  }
-
-  const handlePainPointsComplete = () => {
     setStep('offer');
   }
 
@@ -80,7 +75,6 @@ export default function Home() {
           {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBack} />}
           {step === 'processing' && <ProcessingSection />}
           {step === 'socialProof' && <SocialProofSection onComplete={handleSocialProofComplete} />}
-          {step === 'painPoints' && <PainPointsSection onComplete={handlePainPointsComplete} />}
           {step === 'offer' && <OfferSection result={analysisResult} onBack={handleGoBack} />}
         </div>
       </main>
