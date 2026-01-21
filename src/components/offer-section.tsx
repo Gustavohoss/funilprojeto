@@ -16,28 +16,28 @@ const unlockedContent = [
   {
     icon: <BookOpen className="w-6 h-6 text-primary" />,
     title: 'Protocolo Renda IA: O Passo a Passo',
-    description: 'O método completo para transformar horas vagas em uma fonte de renda previśivel, do zero ao seu primeiro cliente de 4 dígitos.',
+    description: 'O mapa exato para fechar seus primeiros clientes de 4 dígitos em tempo recorde, do zero absoluto à renda previsível.',
     value: 297,
     isBonus: false,
   },
   {
     icon: <Cpu className="w-6 h-6 text-primary" />,
     title: "BÔNUS #1: Aplicativo 'Cliente Infinito AI'",
-    description: 'Nosso sistema secreto que encontra clientes com fome de soluções e constrói sites para eles em minutos. Este é o nosso Mecanismo Único.',
+    description: 'Nosso Mecanismo Único que encontra clientes desesperados por soluções e constrói o que eles precisam com IA em minutos. Isso é o que nos torna diferentes.',
     value: 497,
     isBonus: true,
   },
   {
     icon: <DollarSign className="w-6 h-6 text-primary" />,
     title: 'Módulo: Scripts de Conversão Validados',
-    description: 'As exatas palavras para abordar, negociar e fechar contratos de mais de R$1.000, mesmo que você odeie "vender".',
+    description: 'As palavras exatas para fechar contratos de +R$1.000, mesmo que você se considere péssimo em vendas. Copie, cole e converta.',
     value: 197,
     isBonus: false,
   },
   {
     icon: <Users className="w-6 h-6 text-primary" />,
-    title: 'BÔNUS #2: Acesso à Tribo Secreta',
-    description: 'Você não estará sozinho. Nossa comunidade VIP é onde as parcerias acontecem e as dúvidas são resolvidas em minutos.',
+    title: 'BÔNUS #2: Acesso à Comunidade VIP',
+    description: 'O lugar onde as dúvidas são respondidas em minutos e as parcerias de alto nível nascem. Você nunca mais estará sozinho.',
     value: 197,
     isBonus: true,
   },
@@ -50,7 +50,6 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
   const [priceRevealed, setPriceRevealed] = useState(false);
 
   const score = result?.compatibilityScore ?? 92;
-  const feedback = result?.feedback ?? "Seu perfil tem alta compatibilidade com nosso método. Você está pronto para começar a lucrar com IA.";
 
   const handlePayment = () => {
     // Hotmart checkout link placeholder
@@ -65,7 +64,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
             COMPATIBILIDADE: {score}%
         </div>
         <h1 className="text-4xl md:text-6xl font-bold text-white font-headline leading-tight">
-            ACESSO APROVADO!
+            SEU ACESSO FOI PRÉ-APROVADO!
         </h1>
         
         <Card className="relative overflow-hidden bg-slate-900/50 backdrop-blur-xl border-2 border-primary/50 p-6 md:p-8 rounded-2xl shadow-lg w-full text-center mt-4 shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
@@ -74,11 +73,10 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                 <div className="p-4 bg-primary/10 rounded-full border-2 border-primary/50 mb-4 animate-pulse-subtle">
                     <BadgeCheck className="w-12 h-12 text-primary" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">Esqueça tudo o que você já viu.</h2>
-                <p className="text-slate-300 max-w-md mx-auto mb-6">Você não precisa de mais um 'curso' complicado. Você precisa de um <span className="font-bold text-white">sistema</span>. E seu perfil foi selecionado para ter acesso a ele.</p>
+                <h2 className="text-2xl font-bold text-white mb-2">Você passou na análise.</h2>
+                <p className="text-slate-300 max-w-md mx-auto mb-6">Isso significa que seu perfil é ideal para lucrar com o nosso Mecanismo Único. Veja o que você está prestes a destravar:</p>
                 
                 <div className="w-full text-left space-y-4 mb-6">
-                    <h3 className="font-bold text-white mb-2 text-center text-xl">Ao Entrar no Protocolo, Você Desbloqueia:</h3>
                     {unlockedContent.map((item, index) => (
                         <div key={index} className="flex items-start gap-4 text-slate-300 bg-white/5 p-4 rounded-lg border border-white/10 hover:border-primary/50 transition-all">
                             <div className="p-3 bg-primary/10 rounded-full mt-1 border border-primary/20">{item.icon}</div>
