@@ -22,7 +22,7 @@ export function AnalysisResultSection({ result, onComplete }: AnalysisResultSect
                 </div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white font-headline">Análise Concluída</h2>
                 <p className="text-slate-300 text-lg">Seu perfil é <span className="font-bold text-primary">{score}% compatível</span> com o nosso método.</p>
-                <p className="text-slate-400 max-w-md">Isso significa que você tem um alto potencial para gerar resultados com o que vamos te apresentar. Você está a um passo de ver como isso é possível.</p>
+                <p className="text-slate-400 max-w-md">Você tem alto potencial para gerar resultados com nosso método e está a um passo de ver como.</p>
                 <Button
                     onClick={onComplete}
                     size="lg"

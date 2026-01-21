@@ -14,10 +14,10 @@ type QuizSectionProps = {
 };
 
 const questions = [
-  { id: 'daily_internet_access', text: 'Você possui acesso à internet pelo menos 30 min por dia?', options: ['Sim, com certeza', 'Normalmente sim', 'Raramente'] },
-  { id: 'tech_familiarity', text: 'Você se considera alguém que aprende rápido a usar novas tecnologias ou aplicativos?', options: ['Sim, pego o jeito fácil', 'Levo um tempo, mas aprendo', 'Tenho bastante dificuldade'] },
-  { id: 'work_hours', text: 'Pensando de forma realista, quantas horas por dia você poderia dedicar para criar sua nova fonte de renda?', type: 'slider', min: 0, max: 15, step: 1 },
-  { id: 'learning_willingness', text: 'Você está disposto(a) a seguir um método comprovado para construir algo seu, mesmo que isso te tire da zona de conforto?', options: ['Com certeza! Estou pronto(a)', 'Depende do resultado', 'Prefiro continuar como estou'] },
+  { id: 'daily_internet_access', text: 'Você possui acesso à internet pelo menos 30 min por dia?', options: ['Sim', 'Normalmente', 'Raramente'] },
+  { id: 'tech_familiarity', text: 'Você aprende rápido a usar novas tecnologias ou aplicativos?', options: ['Sim, pego fácil', 'Levo um tempo', 'Tenho dificuldade'] },
+  { id: 'work_hours', text: 'Quantas horas por dia você pode dedicar para criar sua nova fonte de renda?', type: 'slider', min: 0, max: 15, step: 1 },
+  { id: 'learning_willingness', text: 'Você está disposto a seguir um método comprovado para sair da zona de conforto?', options: ['Com certeza, estou pronto!', 'Depende do resultado', 'Prefiro continuar como estou'] },
 ];
 
 function HoursSelector({ question, onAnswer, onHoursChange }: { question: any, onAnswer: (value: number) => void, onHoursChange?: (hours: number) => void }) {

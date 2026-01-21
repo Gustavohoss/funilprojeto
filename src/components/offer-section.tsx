@@ -74,7 +74,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                     <BadgeCheck className="w-12 h-12 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-white mb-2">Você passou na análise.</h2>
-                <p className="text-slate-300 max-w-lg mx-auto mb-6">Seu perfil é ideal para lucrar com nosso Mecanismo Único. Se, mesmo depois de ver a prova e a oportunidade, você ainda duvida, talvez o problema não seja o método. Veja o que você está prestes a destravar:</p>
+                <p className="text-slate-300 max-w-lg mx-auto mb-6">Seu perfil é ideal para nosso Mecanismo Único. Se ainda duvida, o problema não é o método. Veja o que você vai destravar:</p>
                 
                 <div className="w-full text-left space-y-4 mb-6">
                     {unlockedContent.map((item, index) => (

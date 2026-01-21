@@ -27,7 +27,7 @@ export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
             />
         </div>
       
-        <p className="text-md text-slate-300">Isto não é sorte, é o resultado de ter o Mecanismo Certo. Enquanto você hesita, outros com o mesmo potencial que você já estão transformando minutos em PIX. A questão é se você vai continuar apenas observando.</p>
+        <p className="text-md text-slate-300">Isso não é sorte, é método. Enquanto você hesita, outros com seu potencial já lucram. Vai continuar só observando?</p>
 
         <Button
             onClick={onComplete}
