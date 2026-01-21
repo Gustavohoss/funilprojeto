@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Sparkles, BadgeCheck, ChevronLeft, CheckCircle2, Loader2 } from "lucide-react";
+import { Sparkles, BadgeCheck, ChevronLeft, Cpu, BookOpen, Users, DollarSign, Gift } from "lucide-react";
 import { CountdownTimer } from "./countdown-timer";
 import type { SimulatedAnalysisOutput } from "@/app/page";
 
@@ -12,13 +12,39 @@ type OfferSectionProps = {
   onBack: () => void;
 };
 
-const unlockedModules = [
-    { icon: <CheckCircle2 className="text-primary w-5 h-5" />, text: "Módulo 1: A Mentalidade Renda IA" },
-    { icon: <CheckCircle2 className="text-primary w-5 h-5" />, text: "Módulo 2: Encontrando Clientes de Alto Valor" },
-    { icon: <CheckCircle2 className="text-primary w-5 h-5" />, text: "Módulo 3: Construindo Sites Premium com IA em 27 Minutos" },
-    { icon: <CheckCircle2 className="text-primary w-5 h-5" />, text: "Módulo 4: Negociação e Fechamento de Contratos de R$1.000+" },
-    { icon: <CheckCircle2 className="text-primary w-5 h-5" />, text: "Bônus: Comunidade Exclusiva de Alunos" },
+const unlockedContent = [
+  {
+    icon: <BookOpen className="w-6 h-6 text-primary" />,
+    title: 'Protocolo Renda IA: O Passo a Passo',
+    description: 'O método completo para criar uma nova fonte de renda com IA, do zero ao primeiro cliente.',
+    value: 297,
+    isBonus: false,
+  },
+  {
+    icon: <Cpu className="w-6 h-6 text-primary" />,
+    title: 'BÔNUS: Ferramenta "Cliente Infinito AI"',
+    description: 'Nosso aplicativo secreto que encontra clientes e cria sites de alta qualidade para eles em minutos.',
+    value: 497,
+    isBonus: true,
+  },
+  {
+    icon: <DollarSign className="w-6 h-6 text-primary" />,
+    title: 'Módulo: Negociação e Vendas de Alto Valor',
+    description: 'Scripts e estratégias para abordar, negociar e fechar contratos de mais de R$1.000.',
+    value: 197,
+    isBonus: false,
+  },
+  {
+    icon: <Users className="w-6 h-6 text-primary" />,
+    title: 'BÔNUS: Comunidade VIP de Membros',
+    description: 'Acesso exclusivo ao grupo de networking para tirar dúvidas e fazer parcerias.',
+    value: 197,
+    isBonus: true,
+  },
 ];
+
+const totalValue = unlockedContent.reduce((acc, item) => acc + item.value, 0);
+
 
 export function OfferSection({ result, onBack }: OfferSectionProps) {
   const [priceRevealed, setPriceRevealed] = useState(false);
@@ -51,13 +77,25 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                 <h2 className="text-2xl font-bold text-white mb-2">Seu perfil foi selecionado.</h2>
                 <p className="text-slate-300 max-w-md mx-auto mb-6">{feedback}</p>
                 
-                <div className="bg-white/5 border border-primary/20 rounded-lg p-4 text-left w-full mb-6">
-                    <h3 className="font-bold text-white mb-3 text-center">O que você desbloqueou:</h3>
-                    <ul className="space-y-2">
-                        {unlockedModules.map((item, index) => (
-                            <li key={index} className="flex items-center gap-3 text-slate-300">
-                                {item.icon}
-                                <span>{item.text}</span>
+                <div className="bg-white/5 border border-primary/20 rounded-lg p-6 text-left w-full mb-6">
+                    <h3 className="font-bold text-white mb-4 text-center text-lg">Ao Entrar no Protocolo, Você Desbloqueia Acesso Imediato a:</h3>
+                    <ul className="space-y-4">
+                        {unlockedContent.map((item, index) => (
+                            <li key={index} className="flex items-start gap-4 text-slate-300 border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
+                                <div className="p-2 bg-primary/10 rounded-md mt-1">{item.icon}</div>
+                                <div className="flex-1">
+                                    <div className="flex justify-between items-center">
+                                        <h4 className="font-bold text-white">{item.title}</h4>
+                                        <span className="text-sm text-slate-400 line-through">R$ {item.value.toFixed(2).replace('.', ',')}</span>
+                                    </div>
+                                    <p className="text-sm text-slate-400">{item.description}</p>
+                                    {item.isBonus && (
+                                        <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-primary bg-primary/20 px-2 py-1 rounded-full">
+                                            <Gift className="w-3 h-3" />
+                                            BÔNUS
+                                        </div>
+                                    )}
+                                </div>
                             </li>
                         ))}
                     </ul>
@@ -66,10 +104,10 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
 
                 {priceRevealed ? (
                     <div className="w-full animate-fade-in space-y-6">
-                        <p className="text-slate-200 text-lg">O acesso ao método completo foi liberado com <span className="font-bold text-primary">95% de desconto</span> por tempo limitado.</p>
+                        <p className="text-slate-200 text-lg">O acesso ao método completo foi liberado com <span className="font-bold text-primary">desconto especial</span> por tempo limitado.</p>
 
                         <div>
-                            <p className="text-slate-400 line-through">De R$ 197</p>
+                            <p className="text-slate-400 line-through">De R$ {totalValue.toFixed(2).replace('.', ',')}</p>
                             <p className="text-5xl font-bold text-white">por apenas R$ 9,90</p>
                         </div>
 
@@ -83,13 +121,19 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                         <CountdownTimer />
                     </div>
                 ) : (
-                    <Button 
-                        size="lg" 
-                        onClick={() => setPriceRevealed(true)}
-                        className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
-                    >
-                        REVELAR MINHA OFERTA ESPECIAL
-                    </Button>
+                  <div className="w-full space-y-4">
+                      <div className="text-center">
+                        <p className="text-slate-400">Valor total de tudo que você recebe:</p>
+                        <p className="text-2xl font-bold text-slate-400 line-through">R$ {totalValue.toFixed(2).replace('.', ',')}</p>
+                      </div>
+                      <Button 
+                          size="lg" 
+                          onClick={() => setPriceRevealed(true)}
+                          className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
+                      >
+                          REVELAR MINHA OFERTA ESPECIAL
+                      </Button>
+                  </div>
                 )}
             </div>
         </Card>
