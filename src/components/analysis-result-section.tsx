@@ -1,0 +1,38 @@
+'use client';
+
+import type { SimulatedAnalysisOutput } from '@/app/page';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { CheckCircle, ArrowRight } from 'lucide-react';
+
+type AnalysisResultSectionProps = {
+  result: SimulatedAnalysisOutput | null;
+  onComplete: () => void;
+};
+
+export function AnalysisResultSection({ result, onComplete }: AnalysisResultSectionProps) {
+  const score = result?.compatibilityScore ?? 0;
+
+  return (
+    <div className="flex flex-col items-center justify-center text-center gap-8 max-w-lg animate-fade-in">
+        <Card className="bg-slate-900/30 backdrop-blur-md border border-primary/20 p-8 rounded-2xl shadow-lg w-full">
+            <div className="flex flex-col items-center gap-4">
+                <div className="p-3 bg-primary/10 rounded-full border-2 border-primary/30 animate-pulse-subtle">
+                    <CheckCircle className="w-16 h-16 text-primary" />
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white font-headline">Análise Concluída</h2>
+                <p className="text-slate-300 text-lg">Seu perfil é <span className="font-bold text-primary">{score}% compatível</span> com o nosso método.</p>
+                <p className="text-slate-400 max-w-md">Isso significa que você tem um alto potencial para gerar resultados com o que vamos te apresentar. Você está a um passo de ver como isso é possível.</p>
+                <Button
+                    onClick={onComplete}
+                    size="lg"
+                    className="w-full mt-4 text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
+                >
+                    VER A PROVA
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+            </div>
+        </Card>
+    </div>
+  );
+}

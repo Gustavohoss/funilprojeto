@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { HoloPulse } from "@/components/ui/holo-pulse-loader";
 
 const messages = [
-    "Analisando perfil...",
-    "Cruzando dados com oportunidades de IA...",
-    "Verificando compatibilidade...",
-    "Finalizando análise de aptidão..."
+    "Analisando seu perfil...",
+    "Cruzando dados com perfis de sucesso...",
+    "Verificando compatibilidade com o Mecanismo...",
+    "Calculando seu potencial de ganhos..."
 ];
 
 export function ProcessingSection() {

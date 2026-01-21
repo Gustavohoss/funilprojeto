@@ -6,11 +6,12 @@ import { QuizSection } from '@/components/quiz-section';
 import { ProcessingSection } from '@/components/processing-section';
 import { OfferSection } from '@/components/offer-section';
 import { SocialProofSection } from '@/components/social-proof-section';
+import { MethodologySection } from '@/components/methodology-section';
+import { AnalysisResultSection } from '@/components/analysis-result-section';
 import ProceduralGroundBackground from '@/components/procedural-ground-background';
 
-type Step = 'hero' | 'quiz' | 'processing' | 'socialProof' | 'offer';
+type Step = 'hero' | 'quiz' | 'processing' | 'analysis' | 'socialProof' | 'methodology' | 'offer';
 
-// Definindo o tipo para o resultado da análise simulada
 export interface SimulatedAnalysisOutput {
   compatibilityScore: number;
   feedback: string;
@@ -34,49 +35,41 @@ export default function Home() {
     }
   }, []);
 
-  const handleStartQuiz = () => {
+  const handleStartQuiz = () => setStep('quiz');
+  const handleGoBackToHero = () => {
+    updateTitleWithEarnings(null);
+    setStep('hero');
+  };
+  const handleGoBackToQuiz = () => {
+    updateTitleWithEarnings(null);
+    setQuizAnswers({});
+    setAnalysisResult(null);
     setStep('quiz');
   };
-
-  const handleGoBack = () => {
-    updateTitleWithEarnings(null);
-    if (step === 'quiz') {
-      setStep('hero');
-    } else if (step === 'offer') {
-      setQuizAnswers({});
-      setAnalysisResult(null);
-      setStep('quiz');
-    } else if (step === 'socialProof') {
-      setStep('quiz');
-    }
-  }
 
   const handleQuizComplete = (answers: Record<string, any>) => {
     setQuizAnswers(answers);
     setStep('processing');
   };
-  
-  const handleSocialProofComplete = () => {
-    setStep('offer');
-  }
+
+  const handleAnalysisComplete = () => setStep('socialProof');
+  const handleSocialProofComplete = () => setStep('methodology');
+  const handleMethodologyComplete = () => setStep('offer');
 
   useEffect(() => {
     if (step === 'processing' && Object.keys(quizAnswers).length > 0) {
-      // Reset title when processing starts
       updateTitleWithEarnings(null);
       
       const runAnalysis = async () => {
-        // Simula um tempo de processamento mínimo
         await new Promise(resolve => setTimeout(resolve, 4000));
         
-        // Simula o resultado da análise de IA
         const simulatedResult: SimulatedAnalysisOutput = {
           compatibilityScore: 92,
           feedback: "Seu perfil tem alta compatibilidade com nosso método. Você está pronto para começar a lucrar com IA."
         };
         
         setAnalysisResult(simulatedResult);
-        setStep('socialProof');
+        setStep('analysis');
       };
       runAnalysis();
     }
@@ -89,10 +82,12 @@ export default function Home() {
       <main className="flex min-h-svh w-full flex-col items-center p-4 md:p-8 overflow-y-auto">
         <div className="relative z-10 w-full h-full flex flex-col items-center justify-center flex-grow py-8">
           {step === 'hero' && <HeroSection onStart={handleStartQuiz} />}
-          {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBack} onHoursChange={updateTitleWithEarnings} />}
+          {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBackToHero} onHoursChange={updateTitleWithEarnings} />}
           {step === 'processing' && <ProcessingSection />}
+          {step === 'analysis' && <AnalysisResultSection result={analysisResult} onComplete={handleAnalysisComplete} />}
           {step === 'socialProof' && <SocialProofSection onComplete={handleSocialProofComplete} />}
-          {step === 'offer' && <OfferSection result={analysisResult} onBack={handleGoBack} />}
+          {step === 'methodology' && <MethodologySection onComplete={handleMethodologyComplete} />}
+          {step === 'offer' && <OfferSection result={analysisResult} onBack={handleGoBackToQuiz} />}
         </div>
       </main>
     </>

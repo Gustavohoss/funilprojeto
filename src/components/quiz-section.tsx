@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card as ShadCard } from "@/components/ui/card";
-import { CardCanvas } from "@/components/ui/animated-glow-card";
 import { ChevronLeft } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
@@ -15,10 +14,10 @@ type QuizSectionProps = {
 };
 
 const questions = [
-  { id: 'daily_internet_access', text: 'Você possui acesso à internet pelo menos 30 min por dia?', options: ['Sim', 'Não'] },
-  { id: 'tech_familiarity', text: 'Qual seu nível de familiaridade com tecnologia?', options: ['Iniciante', 'Intermediário', 'Avançado'] },
-  { id: 'work_hours', text: 'Quantas horas por dia você pode se dedicar?', type: 'slider', min: 0, max: 15, step: 1 },
-  { id: 'learning_willingness', text: 'Você está disposto(a) a aprender novas habilidades para atingir seus objetivos?', options: ['Com certeza!', 'Dependendo do esforço', 'Não muito'] },
+  { id: 'daily_internet_access', text: 'Você possui acesso à internet pelo menos 30 min por dia?', options: ['Sim, com certeza', 'Normalmente sim', 'Raramente'] },
+  { id: 'tech_familiarity', text: 'Você se considera alguém que aprende rápido a usar novas tecnologias ou aplicativos?', options: ['Sim, pego o jeito fácil', 'Levo um tempo, mas aprendo', 'Tenho bastante dificuldade'] },
+  { id: 'work_hours', text: 'Pensando de forma realista, quantas horas por dia você poderia dedicar para criar sua nova fonte de renda?', type: 'slider', min: 0, max: 15, step: 1 },
+  { id: 'learning_willingness', text: 'Você está disposto(a) a seguir um método comprovado para construir algo seu, mesmo que isso te tire da zona de conforto?', options: ['Com certeza! Estou pronto(a)', 'Depende do resultado', 'Prefiro continuar como estou'] },
 ];
 
 function HoursSelector({ question, onAnswer, onHoursChange }: { question: any, onAnswer: (value: number) => void, onHoursChange?: (hours: number) => void }) {
@@ -31,7 +30,8 @@ function HoursSelector({ question, onAnswer, onHoursChange }: { question: any, o
     if (onHoursChange) {
       onHoursChange(hours);
     }
-  }, [hours, onHoursChange]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hours]);
 
   const getAnnualGoal = (earning: number) => {
     if (earning > 1000000) return "alcançar a independência financeira";
