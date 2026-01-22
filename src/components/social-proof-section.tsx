@@ -27,7 +27,7 @@ export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
             />
         </div>
       
-        <p className="text-md text-slate-300">Isso não é sorte, é método. Enquanto você hesita, outros com seu potencial já lucram. Vai continuar só observando?</p>
+        <p className="text-md text-slate-300">Isso não é sorte, é método. Enquanto você hesita, outros com o seu exato potencial já estão lucrando. Vai continuar só observando?</p>
 
         <Button
             onClick={onComplete}

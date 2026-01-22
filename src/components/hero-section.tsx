@@ -10,10 +10,10 @@ export function HeroSection({ onStart }: HeroSectionProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-6 max-w-3xl animate-fade-in">
       <h1 className="text-4xl md:text-6xl font-bold text-white font-headline leading-tight [text-shadow:0_0_15px_hsl(var(--primary)/0.5)] mt-12">
-        Aviso: A IA está criando uma nova classe de milionários. <span className="text-primary">A questão é: você vai assistir ou vai participar?</span>
+        A IA está criando uma nova classe de milionários. <span className="text-primary">A pergunta é: você vai ficar assistindo ou vai participar?</span>
       </h1>
       <p className="text-lg md:text-xl text-slate-300">
-        Nosso sistema foi projetado para isso, mas não funciona para todos. Responda a 4 perguntas e descubra se seu perfil é compatível.
+        Este sistema foi feito para isso, mas não funciona para todos. Responda a 4 perguntas rápidas e nosso algoritmo vai analisar se o seu perfil é compatível.
       </p>
       <Button 
         onClick={onStart} 

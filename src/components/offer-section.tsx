@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Sparkles, BadgeCheck, ChevronLeft, Cpu, BookOpen, Users, DollarSign, Gift, Zap } from "lucide-react";
+import { Sparkles, BadgeCheck, ChevronLeft, Cpu, BookOpen, Users, Gift, Zap, ShieldCheck } from "lucide-react";
 import { CountdownTimer } from "./countdown-timer";
 import type { SimulatedAnalysisOutput } from "@/app/page";
 
@@ -23,21 +23,21 @@ const unlockedContent = [
   {
     icon: <Cpu className="w-6 h-6 text-primary" />,
     title: "BÔNUS #1: Aplicativo 'Cliente Infinito AI'",
-    description: "Nosso Mecanismo Único que encontra clientes e constrói o que eles precisam com IA. É a sua 'arma secreta' para nunca mais ter que prospectar.",
+    description: "Nosso Mecanismo Único que encontra clientes qualificados e constrói o que eles precisam com 1 clique. É a sua 'arma secreta' para nunca mais ter que prospectar.",
     value: 497,
     isBonus: true,
   },
   {
-    icon: <DollarSign className="w-6 h-6 text-primary" />,
-    title: 'Módulo: Scripts de Conversão Validados',
-    description: 'Copie e cole as palavras exatas que fecham contratos de +R$2.000. Mesmo que você se considere péssimo em vendas, a partir de hoje você terá um script validado que vende por você.',
+    icon: <BookOpen className="w-6 h-6 text-primary" />,
+    title: 'Scripts de Conversão Validados',
+    description: "As exatas palavras que fazem clientes de +R$2.000 dizerem 'sim' no WhatsApp, mesmo que você odeie vender.",
     value: 197,
     isBonus: false,
   },
   {
     icon: <Users className="w-6 h-6 text-primary" />,
-    title: 'BÔNUS #2: Acesso à Comunidade VIP',
-    description: 'Nunca mais se sinta sozinho. Tenha acesso a um grupo de elite onde as dúvidas são respondidas em minutos e as parcerias de alto nível nascem. O ostracismo profissional acaba aqui.',
+    title: 'BÔNUS #2: Comunidade VIP de Fundadores',
+    description: 'Você não está mais sozinho. Acesso a um grupo de elite onde dúvidas viram dinheiro e parcerias nascem. O isolamento acaba aqui.',
     value: 197,
     isBonus: true,
   },
@@ -64,7 +64,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
             COMPATIBILIDADE: {score}%
         </div>
         <h1 className="text-4xl md:text-6xl font-bold text-white font-headline leading-tight">
-            PARABÉNS. SEU ACESSO FOI PRÉ-APROVADO.
+            PARABÉNS. SEU ACESSO AO PROTOCOLO RENDA IA FOI PRÉ-APROVADO.
         </h1>
         
         <Card className="relative overflow-hidden bg-slate-900/50 backdrop-blur-xl border-2 border-primary/50 p-6 md:p-8 rounded-2xl shadow-lg w-full text-center mt-4 shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
@@ -73,8 +73,8 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                 <div className="p-4 bg-primary/10 rounded-full border-2 border-primary/50 mb-4 animate-pulse-subtle">
                     <BadgeCheck className="w-12 h-12 text-primary" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">Você passou na análise.</h2>
-                <p className="text-slate-300 max-w-lg mx-auto mb-6">Seu perfil é ideal para nosso Mecanismo Único. Se ainda duvida, o problema não é o método. Veja o que você vai destravar:</p>
+                <h2 className="text-2xl font-bold text-white mb-2">Seu perfil é ideal. Veja o que você destrava agora:</h2>
+                <p className="text-slate-300 max-w-lg mx-auto mb-6">Se, mesmo depois de ver a prova e entender o mecanismo, você ainda duvida, talvez o problema não seja o método.</p>
                 
                 <div className="w-full text-left space-y-4 mb-6">
                     {unlockedContent.map((item, index) => (
@@ -99,13 +99,21 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
 
 
                 {priceRevealed ? (
-                    <div className="w-full animate-fade-in space-y-6">
-                        <p className="text-slate-200 text-lg">Seu acesso ao sistema completo foi liberado com <span className="font-bold text-primary">98% de desconto</span>. Esta é uma oferta de fundador e não ficará disponível por muito tempo.</p>
-
+                    <div className="w-full animate-fade-in space-y-4">
                         <div className="bg-gradient-to-t from-primary/10 to-transparent p-6 rounded-lg border border-primary/20">
                             <p className="text-slate-400 line-through text-xl">De R$ {totalValue.toFixed(2).replace('.', ',')}</p>
                             <p className="text-white font-bold"><span className="text-5xl">R$ 19,90</span></p>
                             <p className="text-slate-300 text-sm">Pagamento único. Acesso vitalício.</p>
+                        </div>
+
+                        <div className="mt-6 mb-4 border-2 border-dashed border-primary/50 p-4 rounded-xl bg-primary/10 text-center">
+                            <div className="flex justify-center mb-2">
+                                <ShieldCheck className="w-10 h-10 text-primary" />
+                            </div>
+                            <h4 className="font-bold text-white text-lg">Sua Garantia Incondicional de Resultados</h4>
+                            <p className="text-slate-300 text-sm mt-1">
+                                É simples: siga o protocolo. Se em 30 dias você não fechar seu primeiro cliente usando o método, eu devolvo 100% do seu investimento e ainda te faço um PIX de R$100 pelo seu tempo. O risco é todo meu.
+                            </p>
                         </div>
                         
 
@@ -115,7 +123,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                             className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
                         >
                             <Zap className="w-5 h-5 -ml-2 mr-2" />
-                            SIM, QUERO GARANTIR MEU ACESSO IMEDIATO!
+                            QUERO MEU ACESSO IMEDIATO (COM RISCO ZERO)
                         </Button>
                         <CountdownTimer />
                     </div>
@@ -130,7 +138,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                           onClick={() => setPriceRevealed(true)}
                           className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
                       >
-                          QUERO VER O PREÇO ESPECIAL DE FUNDADOR
+                          DESTRAVAR PREÇO ESPECIAL DE FUNDADOR
                       </Button>
                   </div>
                 )}
