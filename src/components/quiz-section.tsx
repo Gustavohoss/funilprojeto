@@ -14,10 +14,10 @@ type QuizSectionProps = {
 };
 
 const questions = [
-  { id: 'daily_internet_access', text: 'Você possui acesso à internet pelo menos 30 min por dia?', options: ['Sim', 'Normalmente', 'Raramente'] },
-  { id: 'tech_familiarity', text: 'Você aprende rápido a usar novas tecnologias ou aplicativos?', options: ['Sim, pego fácil', 'Levo um tempo', 'Tenho dificuldade'] },
-  { id: 'work_hours', text: 'Quantas horas por dia você pode dedicar para criar sua nova fonte de renda?', type: 'slider', min: 0, max: 15, step: 1 },
-  { id: 'learning_willingness', text: 'Você está disposto a seguir um método comprovado para sair da zona de conforto?', options: ['Com certeza, estou pronto!', 'Depende do resultado', 'Prefiro continuar como estou'] },
+  { id: 'effort_vs_reward', text: 'Você sente que, apesar de todo seu esforço, o reconhecimento (financeiro e pessoal) que você recebe não é justo?', options: ['Sim, sinto isso todos os dias.', 'Às vezes, é frustrante.', 'Não, estou satisfeito com meus resultados.'] },
+  { id: 'main_frustration', text: 'Se você pudesse estalar os dedos e resolver um problema da sua vida profissional, qual seria?', options: ['Falta de tempo, me sinto um escravo.', 'Falta de dinheiro para ter segurança.', 'Falta de um trabalho com propósito.'] },
+  { id: 'work_hours', text: 'Quantas horas por dia você está disposto a dedicar para construir sua nova fonte de renda?', type: 'slider', min: 0, max: 15, step: 1 },
+  { id: 'method_willingness', text: 'Você está pronto para seguir um método comprovado, mesmo que isso signifique desafiar tudo o que aprendeu sobre "trabalho duro" até hoje?', options: ['Sim, estou faminto por uma mudança.', 'Tenho receio, mas estou curioso.', 'Prefiro o caminho tradicional.'] },
 ];
 
 function HoursSelector({ question, onAnswer, onHoursChange }: { question: any, onAnswer: (value: number) => void, onHoursChange?: (hours: number) => void }) {

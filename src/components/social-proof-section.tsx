@@ -12,7 +12,7 @@ export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-8 max-w-lg animate-fade-in">
         <h2 className="text-2xl md:text-4xl font-bold text-white font-headline [text-shadow:0_0_15px_hsl(var(--primary)/0.5)]">
-            Veja o que um perfil como o seu já conquistou.
+            Enquanto você lia esta página, um de nossos membros com o mesmo perfil que o seu acabou de receber isso.
         </h2>
 
         <div className="w-full max-w-xs overflow-hidden rounded-xl shadow-lg border-2 border-primary/30 mt-4 shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
@@ -27,14 +27,14 @@ export function SocialProofSection({ onComplete }: SocialProofSectionProps) {
             />
         </div>
       
-        <p className="text-md text-slate-300">Isso não é sorte, é método. Enquanto você hesita, outros com o seu exato potencial já estão lucrando. Vai continuar só observando?</p>
+        <p className="text-md text-slate-300">A pergunta agora é: vai continuar só observando?</p>
 
         <Button
             onClick={onComplete}
             size="lg"
             className="w-full max-w-xs text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
         >
-            DESTRAVAR MINHA OFERTA
+            ENTENDI. QUERO MINHA CHANCE
             <ArrowRight className="w-5 h-5 ml-2" />
         </Button>
     </div>

@@ -22,13 +22,13 @@ export function AnalysisResultSection({ result, onComplete }: AnalysisResultSect
                 </div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white font-headline">Análise Concluída</h2>
                 <p className="text-slate-300 text-lg">Seu perfil é <span className="font-bold text-primary">{score}% compatível</span> com o nosso método.</p>
-                <p className="text-slate-400 max-w-md">Isso significa que você tem o que é preciso para transformar IA em renda. Agora, veja a prova.</p>
+                <p className="text-slate-400 max-w-md">Isso é raro. Significa que você tem o que é preciso para transformar IA em renda. Agora, veja a prova de que você não está sozinho.</p>
                 <Button
                     onClick={onComplete}
                     size="lg"
                     className="w-full mt-4 text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
                 >
-                    VER A PROVA
+                    VER A PROVA (NÃO ACREDITE, VEJA)
                     <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
             </div>

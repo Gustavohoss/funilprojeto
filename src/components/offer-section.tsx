@@ -16,28 +16,28 @@ const unlockedContent = [
   {
     icon: <BookOpen className="w-6 h-6 text-primary" />,
     title: 'Protocolo Renda IA: O Passo a Passo',
-    description: 'O mapa exato para você fechar seus primeiros clientes de 4 dígitos em tempo recorde. Imagine-se, daqui a 30 dias, recebendo o PIX de um trabalho que levou minutos para fazer.',
+    description: 'O mapa exato para fechar seus primeiros clientes de 4 dígitos em 30 dias ou menos. Copie, cole e receba o PIX. Sem precisar pensar.',
     value: 297,
     isBonus: false,
   },
   {
     icon: <Cpu className="w-6 h-6 text-primary" />,
     title: "BÔNUS #1: Aplicativo 'Cliente Infinito AI'",
-    description: "Nosso Mecanismo Único que encontra clientes qualificados e constrói o que eles precisam com 1 clique. É a sua 'arma secreta' para nunca mais ter que prospectar.",
+    description: "Nosso Mecanismo Único. A 'arma secreta' que encontra clientes desesperados por um serviço e entrega o que eles precisam com 1 clique. O fim da prospecção manual.",
     value: 497,
     isBonus: true,
   },
   {
     icon: <BookOpen className="w-6 h-6 text-primary" />,
     title: 'Scripts de Conversão Validados',
-    description: "As exatas palavras que fazem clientes de +R$2.000 dizerem 'sim' no WhatsApp, mesmo que você odeie vender.",
+    description: "O 'CTRL+C, CTRL+V' da persuasão. As exatas palavras que fazem clientes implorarem para te pagar no WhatsApp, mesmo que você odeie vender.",
     value: 197,
     isBonus: false,
   },
   {
     icon: <Users className="w-6 h-6 text-primary" />,
     title: 'BÔNUS #2: Comunidade VIP de Fundadores',
-    description: 'Você não está mais sozinho. Acesso a um grupo de elite onde dúvidas viram dinheiro e parcerias nascem. O isolamento acaba aqui.',
+    description: 'Seu novo círculo de amizades. Acesso a um grupo de elite onde dúvidas viram dinheiro e o isolamento acaba. O ambiente que sua família não entende.',
     value: 197,
     isBonus: true,
   },
@@ -110,7 +110,7 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
                             <div className="flex justify-center mb-2">
                                 <ShieldCheck className="w-10 h-10 text-primary" />
                             </div>
-                            <h4 className="font-bold text-white text-lg">Sua Garantia Incondicional de Resultados</h4>
+                            <h4 className="font-bold text-white text-lg">Sua Garantia Blindada de Resultados</h4>
                             <p className="text-slate-300 text-sm mt-1">
                                 É simples: siga o protocolo. Se em 30 dias você não fechar seu primeiro cliente usando o método, eu devolvo 100% do seu investimento e ainda te faço um PIX de R$100 pelo seu tempo. O risco é todo meu.
                             </p>
