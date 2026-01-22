@@ -7,9 +7,10 @@ import { ProcessingSection } from '@/components/processing-section';
 import { OfferSection } from '@/components/offer-section';
 import { SocialProofSection } from '@/components/social-proof-section';
 import { AnalysisResultSection } from '@/components/analysis-result-section';
+import { MethodologySection } from '@/components/methodology-section';
 import ProceduralGroundBackground from '@/components/procedural-ground-background';
 
-type Step = 'hero' | 'quiz' | 'processing' | 'analysis' | 'socialProof' | 'offer';
+type Step = 'hero' | 'quiz' | 'processing' | 'analysis' | 'socialProof' | 'methodology' | 'offer';
 
 export interface SimulatedAnalysisOutput {
   compatibilityScore: number;
@@ -52,7 +53,8 @@ export default function Home() {
   };
 
   const handleAnalysisComplete = () => setStep('socialProof');
-  const handleSocialProofComplete = () => setStep('offer');
+  const handleSocialProofComplete = () => setStep('methodology');
+  const handleMethodologyComplete = () => setStep('offer');
 
   useEffect(() => {
     if (step === 'processing' && Object.keys(quizAnswers).length > 0) {
@@ -84,6 +86,7 @@ export default function Home() {
           {step === 'processing' && <ProcessingSection />}
           {step === 'analysis' && <AnalysisResultSection result={analysisResult} onComplete={handleAnalysisComplete} />}
           {step === 'socialProof' && <SocialProofSection onComplete={handleSocialProofComplete} />}
+          {step === 'methodology' && <MethodologySection onComplete={handleMethodologyComplete} />}
           {step === 'offer' && <OfferSection result={analysisResult} onBack={handleGoBackToQuiz} />}
         </div>
       </main>
