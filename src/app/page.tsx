@@ -29,7 +29,7 @@ export default function Home() {
       if (hours === null || hours === 0) {
         document.title = ORIGINAL_TITLE;
       } else {
-        const monthlyEarning = hours * 200 * 30;
+        const monthlyEarning = hours * 400 * 30;
         document.title = `Potencial de R$ ${monthlyEarning.toLocaleString('pt-BR')}/mês | ${ORIGINAL_TITLE}`;
       }
     }
