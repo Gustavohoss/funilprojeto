@@ -14,7 +14,15 @@ type QuizSectionProps = {
 };
 
 const questions = [
-  { id: 'effort_vs_reward', text: 'Você sente que, apesar de todo seu esforço, o reconhecimento (financeiro e pessoal) que você recebe não é justo?', options: ['Sim, sinto isso todos os dias.', 'Às vezes, é frustrante.', 'Não, estou satisfeito com meus resultados.'] },
+  { 
+    id: 'experience_level', 
+    text: 'Nossa IA faz 90% do trabalho técnico (códigos e design). Qual é o seu nível atual de experiência com criação de sites?', 
+    options: [
+      'Sou totalmente iniciante (Nunca criei um site).', 
+      'Tenho uma noção básica.', 
+      'Já trabalho na área.'
+    ] 
+  },
   { id: 'main_frustration', text: 'Se você pudesse estalar os dedos e resolver um problema da sua vida profissional, qual seria?', options: ['Falta de tempo, me sinto um escravo.', 'Falta de dinheiro para ter segurança.', 'Falta de um trabalho com propósito.'] },
   { id: 'work_hours', text: 'Quantas horas por dia você está disposto a dedicar para construir sua nova fonte de renda?', type: 'slider', min: 0, max: 15, step: 1 },
   { id: 'method_willingness', text: 'Você está pronto para seguir um método comprovado, mesmo que isso signifique desafiar tudo o que aprendeu sobre "trabalho duro" até hoje?', options: ['Sim, estou faminto por uma mudança.', 'Tenho receio, mas estou curioso.', 'Prefiro o caminho tradicional.'] },
