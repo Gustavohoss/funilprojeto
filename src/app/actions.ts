@@ -62,7 +62,6 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
             document: document.replace(/\D/g, ''),
             phone: phone.replace(/\D/g, '')
         },
-        checkoutUrl: 'https://app.com',
     };
 
     try {
