@@ -43,7 +43,12 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
         reference: reference,
         productHash: PRODUCT_HASH,
         orderbump: bumpHashes,
-        customer: { name, email, document: '', phone: '' },
+        customer: { 
+            name, 
+            email, 
+            document: '42879052882', // Placeholder from user's script
+            phone: '11987654321'    // Placeholder
+        },
         checkoutUrl: 'https://app.com', // Placeholder, seems required by the context of the php script
     };
 
