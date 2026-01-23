@@ -23,7 +23,15 @@ const questions = [
       'Já trabalho na área.'
     ] 
   },
-  { id: 'main_frustration', text: 'Se você pudesse estalar os dedos e resolver um problema da sua vida profissional, qual seria?', options: ['Falta de tempo, me sinto um escravo.', 'Falta de dinheiro para ter segurança.', 'Falta de um trabalho com propósito.'] },
+  { 
+    id: 'market_awareness', 
+    text: 'Uma pesquisa recente mostrou que 70% das empresas locais (Pizzarias, Advogados, Clínicas) não têm site profissional. Você sabia que essas empresas pagam de R$ 600 a R$ 1.500 por um serviço simples?', 
+    options: [
+      'Não sabia, estou chocado com o valor.', 
+      'Desconfiava, mas não sabia como cobrar.', 
+      'Sim, vejo isso todo dia no meu bairro.'
+    ] 
+  },
   { id: 'work_hours', text: 'Quantas horas por dia você está disposto a dedicar para construir sua nova fonte de renda?', type: 'slider', min: 0, max: 15, step: 1 },
   { id: 'method_willingness', text: 'Você está pronto para seguir um método comprovado, mesmo que isso signifique desafiar tudo o que aprendeu sobre "trabalho duro" até hoje?', options: ['Sim, estou faminto por uma mudança.', 'Tenho receio, mas estou curioso.', 'Prefiro o caminho tradicional.'] },
 ];
