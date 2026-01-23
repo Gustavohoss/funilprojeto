@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -48,15 +47,15 @@ export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModal
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] bg-slate-900 border-primary/30">
-        <form onSubmit={handleSubmit}>
+      <DialogContent className="sm:max-w-[425px] bg-slate-950/80 backdrop-blur-lg border border-primary/20 rounded-2xl shadow-lg shadow-primary/10">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <DialogHeader>
             <DialogTitle className="text-white font-headline text-2xl text-center">Quase lá!</DialogTitle>
-            <DialogDescription className="text-slate-400 text-center">
+            <DialogDescription className="text-slate-400 text-center !mt-2">
               Preencha seus dados para garantir sua vaga e acessar a oferta.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
+          <div className="grid gap-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right text-slate-300">
                 Nome
@@ -86,15 +85,13 @@ export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModal
             </div>
             {error && <p className="text-red-500 text-sm text-center col-span-4">{error}</p>}
           </div>
-          <DialogFooter>
             <Button 
                 type="submit" 
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg py-6 font-bold"
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg py-6 font-bold rounded-lg"
                 disabled={isLoading}
             >
               {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'ACESSAR OFERTA AGORA'}
             </Button>
-          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
