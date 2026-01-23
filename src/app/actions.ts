@@ -5,6 +5,11 @@ const PRODUCT_HASH = 'prod_10a75d7d4bf8f12a';
 const PRODUCT_TITLE = 'Cria Sites Com IA';
 const BASE_AMOUNT_CENTS = 1990;
 
+const BUMP_PRICES_CENTS: Record<string, number> = {
+    "BUMP_PREMIUM_SCRIPT": 1490,
+    "BUMP_LIFETIME_ACCESS": 1290,
+};
+
 // --- Interfaces ---
 
 interface CreatePaymentInput {
@@ -37,8 +42,17 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
     const apiUrl = 'https://multi.paradisepags.com/api/v1/transaction.php';
     const reference = 'CKO-' + new Date().getTime() + '-' + Math.floor(Math.random() * 100000);
 
+    let totalAmountCents = BASE_AMOUNT_CENTS;
+    if (bumpHashes) {
+        for (const hash of bumpHashes) {
+            if (BUMP_PRICES_CENTS[hash]) {
+                totalAmountCents += BUMP_PRICES_CENTS[hash];
+            }
+        }
+    }
+
     const payload = {
-        amount: BASE_AMOUNT_CENTS,
+        amount: totalAmountCents,
         description: PRODUCT_TITLE,
         reference: reference,
         productHash: PRODUCT_HASH,
