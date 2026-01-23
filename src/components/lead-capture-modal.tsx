@@ -11,7 +11,6 @@ import QRCode from "react-qr-code";
 import { createPayment, checkPaymentStatus, type PaymentResponse } from '@/app/actions';
 import { CheckCircle } from 'lucide-react';
 
-
 type LeadCaptureModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -195,29 +194,28 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
             {view === 'form' && (
                 <>
                     <div className="price-display text-center mb-6 pb-5 border-b border-dashed border-border">
-                        <div className="price-label text-slate-500 text-xs line-through">Valor Original: R$ 97,00</div>
+                        <div className="price-label text-slate-500 text-xs line-through">De R$ 97,00 por</div>
                         <div className={`current-price text-5xl text-white font-bold my-1 transition-colors duration-300 ${priceUpdated ? 'text-primary' : ''}`}>
                             {formatPrice(totalPrice)}
                         </div>
                         <div className="price-sub text-primary text-[11px] uppercase tracking-wider">
-                            ⚡ ACESSO IMEDIATO LIBERADO
+                            ⚡ ACESSO IMEDIATO
                         </div>
                     </div>
 
                     <ul className="access-list list-none mb-6 bg-primary/5 p-4 rounded-md border border-white/10 text-sm">
-                        <li className="text-slate-300 mb-2 flex items-center"><span className="text-primary mr-2.5 font-bold">[✓]</span> IA Geradora de Sites (SaaS Secreto)</li>
-                        <li className="text-slate-300 mb-2 flex items-center"><span className="text-primary mr-2.5 font-bold">[✓]</span> Manual do Caçador de Clientes</li>
-                        <li className="text-slate-300 flex items-center"><span className="text-primary mr-2.5 font-bold">[✓]</span> Script de Vendas (Copia e Cola)</li>
+                        <li className="text-slate-300 mb-2 flex items-center"><span className="text-primary mr-2.5 font-bold">[✓]</span> IA Criadora de Sites (SaaS)</li>
+                        <li className="text-slate-300 flex items-center"><span className="text-primary mr-2.5 font-bold">[✓]</span> Manual do Caçador + Scripts</li>
                     </ul>
 
                     <form id="checkout-form" onSubmit={(e) => e.preventDefault()}>
                         <div className="mb-4">
                             <label className="block text-muted-foreground text-[11px] mb-1.5 uppercase">Nome Completo</label>
-                            <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input w-full p-3.5 bg-[#111] border border-border text-primary rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Digite seu nome..." required />
+                            <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input w-full p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu nome..." required />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-muted-foreground text-[11px] mb-1.5 uppercase">Seu Melhor E-mail</label>
-                            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-input w-full p-3.5 bg-[#111] border border-border text-primary rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Onde receber o acesso..." required />
+                            <label className="block text-muted-foreground text-[11px] mb-1.5 uppercase">E-mail Principal</label>
+                            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-input w-full p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu e-mail..." required />
                         </div>
                         
                         {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
@@ -227,22 +225,22 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
                                 <div className="absolute -top-2.5 right-2.5 bg-red-600 text-white text-[9px] px-1.5 py-0.5 rounded font-bold uppercase">MAIS VENDIDO</div>
                                 <input type="checkbox" checked={isBump1Checked} onChange={e => setIsBump1Checked(e.target.checked)} className="appearance-none w-5 h-5 min-w-[20px] border-2 border-slate-600 rounded bg-black cursor-pointer flex items-center justify-center mt-0.5 checked:bg-primary checked:border-primary" />
                                 <div className="bump-content">
-                                    <h4 className="text-sm text-white mb-1 uppercase">Sim! Quero Clientes Premium <span className="text-primary normal-case">(+{formatPrice(bump1Price)})</span></h4>
-                                    <p className="text-xs text-slate-400 leading-snug">Adicione o <strong>Script "Baleia Azul"</strong> para fechar contratos de R$ 2.000+ com Advogados e Médicos.</p>
+                                    <h4 className="text-sm text-white mb-1 uppercase">Script Clientes Ricos <span className="text-primary normal-case block sm:inline">(+{formatPrice(bump1Price)})</span></h4>
+                                    <p className="text-xs text-slate-400 leading-snug">Feche contratos de R$ 2k+ com Advogados e Médicos.</p>
                                 </div>
                             </label>
 
                             <label className={`bump-box flex gap-3 items-start p-4 bg-white/5 border-2 border-dashed rounded-md cursor-pointer transition-all duration-300 relative ${isBump2Checked ? 'border-primary bg-primary/5' : 'border-border'}`}>
                                 <input type="checkbox" checked={isBump2Checked} onChange={e => setIsBump2Checked(e.target.checked)} className="appearance-none w-5 h-5 min-w-[20px] border-2 border-slate-600 rounded bg-black cursor-pointer flex items-center justify-center mt-0.5 checked:bg-primary checked:border-primary" />
                                 <div className="bump-content">
-                                    <h4 className="text-sm text-white mb-1 uppercase">Sim! Quero Acesso Vitalício <span className="text-primary normal-case">(+{formatPrice(bump2Price)})</span></h4>
-                                    <p className="text-xs text-slate-400 leading-snug">Garanta atualizações eternas da IA e nunca perca seu acesso, mesmo se o preço subir.</p>
+                                    <h4 className="text-sm text-white mb-1 uppercase">Acesso Vitalício <span className="text-primary normal-case block sm:inline">(+{formatPrice(bump2Price)})</span></h4>
+                                    <p className="text-xs text-slate-400 leading-snug">Nunca perca seu acesso e receba atualizações grátis.</p>
                                 </div>
                             </label>
                         </div>
                         
                         <button type="button" onClick={handlePayClick} disabled={isLoading} className="w-full p-4 bg-primary text-black text-base font-extrabold uppercase rounded-md cursor-pointer flex items-center justify-center gap-2.5 transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_0_25px_hsl(var(--primary)/0.6)] disabled:opacity-70 disabled:cursor-not-allowed">
-                           {isLoading ? 'PROCESSANDO...' : 'GERAR PIX AGORA ❖'}
+                           {isLoading ? 'GERANDO...' : 'GERAR PIX AGORA ❖'}
                         </button>
                     </form>
                 </>
@@ -250,7 +248,7 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
 
             <div className="mt-5 text-center text-[10px] text-slate-600 flex justify-center gap-4">
                 <span>🛡️ GARANTIA 7 DIAS</span>
-                <span>🔒 DADOS CRIPTOGRAFADOS</span>
+                <span>🔒 CRIPTOGRAFADO</span>
             </div>
         </div>
       </DialogContent>
