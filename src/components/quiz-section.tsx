@@ -33,7 +33,14 @@ const questions = [
     ] 
   },
   { id: 'work_hours', text: 'Quantas horas por dia você está disposto a dedicar para construir sua nova fonte de renda?', type: 'slider', min: 0, max: 15, step: 1 },
-  { id: 'method_willingness', text: 'Você está pronto para seguir um método comprovado, mesmo que isso signifique desafiar tudo o que aprendeu sobre "trabalho duro" até hoje?', options: ['Sim, estou faminto por uma mudança.', 'Tenho receio, mas estou curioso.', 'Prefiro o caminho tradicional.'] },
+  { 
+    id: 'mindset_check', 
+    text: 'O mercado está cheio de amadores, mas seus resultados mostram que você joga para vencer. A ferramenta que vamos liberar é uma \'Arma Injusta\' contra a concorrência. Você tem frieza para usar isso e lucrar alto?', 
+    options: [
+      'Sim, quero dominar o meu mercado.', 
+      'Não, tenho medo de ganhar muito.'
+    ] 
+  },
 ];
 
 function HoursSelector({ question, onAnswer, onHoursChange }: { question: any, onAnswer: (value: number) => void, onHoursChange?: (hours: number) => void }) {
