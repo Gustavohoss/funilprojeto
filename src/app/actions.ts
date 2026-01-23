@@ -65,16 +65,25 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
 
         const result = await response.json();
 
+        // Helper to extract a detailed error message from the gateway response
+        const getErrorMessage = (res: any) => {
+             return res?.errors ? Object.values(res.errors).flat().join(' ') : (res.message || res.error || 'Ocorreu um erro desconhecido.');
+        }
+
         if (!response.ok) {
-            const errorMessage = result?.errors ? Object.values(result.errors).flat().join(' ') : (result.message || result.error || 'Ocorreu um erro ao gerar o PIX.');
-            return { error: errorMessage };
+            return { error: getErrorMessage(result) };
+        }
+        
+        // Also check for PIX data on a successful response, as the API might return 200 OK with an error message inside.
+        if (!result.pix?.pix_qr_code) {
+             return { error: getErrorMessage(result) || 'Falha ao gerar o PIX. Tente novamente.' };
         }
 
         return result;
 
     } catch (error: any) {
         console.error('Payment Gateway API Error:', error);
-        return { error: error.message || 'Falha ao se comunicar com o gateway de pagamento.' };
+        return { error: error.message || 'Falha na comunicação com o gateway de pagamento.' };
     }
 }
 

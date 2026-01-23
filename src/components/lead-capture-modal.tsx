@@ -74,8 +74,8 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
     
     setIsLoading(false);
 
-    if (result.error || !result.pix?.pix_qr_code) {
-        setError(result.error || 'Falha ao gerar o PIX. Tente novamente.');
+    if (result.error) {
+        setError(result.error);
         setTimeout(() => setError(''), 5000);
     } else {
         setPaymentData(result);
