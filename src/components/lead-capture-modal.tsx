@@ -1,34 +1,44 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import Image from 'next/image';
+import QRCode from "react-qr-code";
+import { createPayment, checkPaymentStatus, type PaymentResponse } from '@/app/actions';
+import { CheckCircle } from 'lucide-react';
+
 
 type LeadCaptureModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: { name: string; email: string }) => void; // Keep for now, but new logic is internal
+  onSubmit: (data: { name: string; email: string }) => void;
 };
 
 const basePrice = 19.90;
 const bump1Price = 14.90;
 const bump2Price = 12.90;
 
-export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModalProps) {
+const BUMP1_HASH = "BUMP_PREMIUM_SCRIPT";
+const BUMP2_HASH = "BUMP_LIFETIME_ACCESS";
+
+
+export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isBump1Checked, setIsBump1Checked] = useState(false);
   const [isBump2Checked, setIsBump2Checked] = useState(false);
   const [totalPrice, setTotalPrice] = useState(basePrice);
   const [priceUpdated, setPriceUpdated] = useState(false);
-  const [view, setView] = useState<'form' | 'qr'>('form');
+  const [view, setView] = useState<'form' | 'qr' | 'success'>('form');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
+
+  const paymentCheckInterval = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     let total = basePrice;
@@ -36,14 +46,14 @@ export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModal
     if (isBump2Checked) total += bump2Price;
     setTotalPrice(total);
 
-    if (isOpen) { // Only trigger flash effect if modal is open
+    if (isOpen) {
       setPriceUpdated(true);
       const timer = setTimeout(() => setPriceUpdated(false), 300);
       return () => clearTimeout(timer);
     }
   }, [isBump1Checked, isBump2Checked, isOpen]);
-  
-  const handlePayClick = () => {
+
+  const handlePayClick = async () => {
     if (!name || !email) {
       setError("ERRO: Preencha todos os dados para liberar o acesso.");
       setTimeout(() => setError(''), 3000);
@@ -57,15 +67,51 @@ export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModal
     setError('');
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-      setView('qr');
-    }, 1500);
+    const bumpHashes: string[] = [];
+    if (isBump1Checked) bumpHashes.push(BUMP1_HASH);
+    if (isBump2Checked) bumpHashes.push(BUMP2_HASH);
+
+    const result = await createPayment({ name, email, bumpHashes });
+    
+    setIsLoading(false);
+
+    if (result.error || !result.pix?.pix_qr_code) {
+        setError(result.error || 'Falha ao gerar o PIX. Tente novamente.');
+        setTimeout(() => setError(''), 5000);
+    } else {
+        setPaymentData(result);
+        setView('qr');
+    }
   };
+
+  const startPaymentChecker = (hash: string) => {
+    if (paymentCheckInterval.current) {
+        clearInterval(paymentCheckInterval.current);
+    }
+    paymentCheckInterval.current = setInterval(async () => {
+        const statusResult = await checkPaymentStatus(hash);
+        if (statusResult.payment_status === 'paid') {
+            if (paymentCheckInterval.current) clearInterval(paymentCheckInterval.current);
+            setView('success');
+        }
+    }, 3000); // Check every 3 seconds
+  }
+
+  useEffect(() => {
+    if (view === 'qr' && paymentData?.hash) {
+      startPaymentChecker(paymentData.hash);
+    }
+    
+    return () => { // Cleanup on unmount or view change
+      if (paymentCheckInterval.current) {
+        clearInterval(paymentCheckInterval.current);
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view, paymentData]);
 
   const handleClose = () => {
     onClose();
-    // Reset state after a delay to allow for closing animation
     setTimeout(() => {
       setView('form');
       setIsBump1Checked(false);
@@ -73,12 +119,25 @@ export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModal
       setName('');
       setEmail('');
       setIsLoading(false);
+      setPaymentData(null);
+      setError('');
+      if (paymentCheckInterval.current) {
+        clearInterval(paymentCheckInterval.current);
+      }
     }, 500);
   };
+
+  const copyPixCode = () => {
+    if (paymentData?.pix?.pix_qr_code) {
+        navigator.clipboard.writeText(paymentData.pix.pix_qr_code);
+        // Maybe add a small "copied" feedback
+    }
+  }
 
   const formatPrice = (value: number) => {
     return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   };
+  
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
@@ -92,7 +151,17 @@ export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModal
         </div>
 
         <div className="modal-body p-6">
-            {view === 'qr' ? (
+            {view === 'success' && (
+                <div className="flex flex-col items-center justify-center text-center gap-4 animate-fade-in py-8">
+                    <CheckCircle className="w-20 h-20 text-primary animate-pulse-subtle" />
+                    <h2 className="text-2xl font-bold text-white mt-4">Pagamento Aprovado!</h2>
+                    <p className="text-slate-300">Seu acesso foi enviado para o seu e-mail. Bem-vindo a bordo!</p>
+                    <button onClick={handleClose} className="mt-6 w-full p-3 bg-primary text-black text-base font-extrabold uppercase rounded-md cursor-pointer">
+                        FECHAR
+                    </button>
+                </div>
+            )}
+            {view === 'qr' && paymentData && (
                  <>
                     <div className="price-display text-center mb-6 pb-5 border-b border-dashed border-border">
                         <div className="price-label text-slate-500 text-xs line-through">{formatPrice(97.00)}</div>
@@ -103,24 +172,27 @@ export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModal
                            AGUARDANDO PAGAMENTO...
                         </div>
                     </div>
-                    <div className="qr-section mt-5 text-center bg-white p-5 rounded-lg animate-fade-in">
+                    <div className="qr-section mt-5 text-center bg-white p-5 rounded-lg animate-fade-in" style={{display: 'block'}}>
                         <p className="text-black font-bold font-sans mb-2.5">ESCANEIE PARA PAGAR:</p>
-                        <Image src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" width={180} height={180} alt="QR Code para pagamento" className="mx-auto" />
+                        <div className='p-2 bg-white inline-block'>
+                          <QRCode value={paymentData.pix?.pix_qr_code || ''} size={180} />
+                        </div>
                         <p className="text-slate-700 text-xs mt-2.5 font-sans">Ou copie o código abaixo:</p>
                         <textarea 
                             className="copy-pix w-full bg-slate-100 border border-slate-300 p-2 text-xs mt-2.5 text-slate-800 break-all rounded-sm" 
                             readOnly 
-                            defaultValue="00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426655440000"
+                            value={paymentData.pix?.pix_qr_code || ''}
                         />
                         <button 
-                            onClick={() => navigator.clipboard.writeText('00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426655440000')}
+                            onClick={copyPixCode}
                             className="mt-2.5 p-2.5 bg-black text-white border-none rounded-sm cursor-pointer w-full hover:bg-slate-800"
                         >
                             COPIAR CÓDIGO PIX
                         </button>
                     </div>
                  </>
-            ) : (
+            )}
+            {view === 'form' && (
                 <>
                     <div className="price-display text-center mb-6 pb-5 border-b border-dashed border-border">
                         <div className="price-label text-slate-500 text-xs line-through">Valor Original: R$ 97,00</div>
@@ -138,7 +210,7 @@ export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModal
                         <li className="text-slate-300 flex items-center"><span className="text-primary mr-2.5 font-bold">[✓]</span> Script de Vendas (Copia e Cola)</li>
                     </ul>
 
-                    <form id="checkout-form">
+                    <form id="checkout-form" onSubmit={(e) => e.preventDefault()}>
                         <div className="mb-4">
                             <label className="block text-muted-foreground text-[11px] mb-1.5 uppercase">Nome Completo</label>
                             <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input w-full p-3.5 bg-[#111] border border-border text-primary rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Digite seu nome..." required />
