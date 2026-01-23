@@ -14,7 +14,7 @@ type OfferSectionProps = {
 const kitDeAcessoRapido = [
   'O Manual do Caçador: Como achar empresas sem site no Google Maps em 2 minutos.',
   'O Script "Copia e Cola": A mensagem exata de WhatsApp que faz o dono da empresa te responder na hora.',
-  'O Segredo da IA: Acesso à aula onde mostro a ferramenta que cria o site sozinha (O seu SaaS).',
+  'O Segredo da IA: Acesso à tecnologia oculta que gera o site pronto em segundos (A mesma que agências cobram caro para ter).',
 ];
 
 
