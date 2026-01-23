@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Sparkles, BadgeCheck, ChevronLeft, Cpu, BookOpen, Users, Gift, Zap, ShieldCheck } from "lucide-react";
+import { Sparkles, Check, Zap, ChevronLeft } from "lucide-react";
 import { CountdownTimer } from "./countdown-timer";
 import type { SimulatedAnalysisOutput } from "@/app/page";
 
@@ -12,44 +11,14 @@ type OfferSectionProps = {
   onBack: () => void;
 };
 
-const unlockedContent = [
-  {
-    icon: <BookOpen className="w-6 h-6 text-primary" />,
-    title: 'Protocolo Renda IA: O Passo a Passo',
-    description: 'O mapa exato para fechar seus primeiros clientes de 4 dígitos em 30 dias ou menos. Copie, cole e receba o PIX. Sem precisar pensar.',
-    value: 297,
-    isBonus: false,
-  },
-  {
-    icon: <Cpu className="w-6 h-6 text-primary" />,
-    title: "BÔNUS #1: Aplicativo 'Cliente Infinito AI'",
-    description: "Nosso Mecanismo Único. A 'arma secreta' que encontra clientes desesperados por um serviço e entrega o que eles precisam com 1 clique. O fim da prospecção manual.",
-    value: 497,
-    isBonus: true,
-  },
-  {
-    icon: <BookOpen className="w-6 h-6 text-primary" />,
-    title: 'Scripts de Conversão Validados',
-    description: "O 'CTRL+C, CTRL+V' da persuasão. As exatas palavras que fazem clientes implorarem para te pagar no WhatsApp, mesmo que você odeie vender.",
-    value: 197,
-    isBonus: false,
-  },
-  {
-    icon: <Users className="w-6 h-6 text-primary" />,
-    title: 'BÔNUS #2: Comunidade VIP de Fundadores',
-    description: 'Seu novo círculo de amizades. Acesso a um grupo de elite onde dúvidas viram dinheiro e o isolamento acaba. O ambiente que sua família não entende.',
-    value: 197,
-    isBonus: true,
-  },
+const kitDeAcessoRapido = [
+  'O Manual do Caçador: Como achar empresas sem site no Google Maps em 2 minutos.',
+  'O Script "Copia e Cola": A mensagem exata de WhatsApp que faz o dono da empresa te responder na hora.',
+  'O Segredo da IA: Acesso à aula onde mostro a ferramenta que cria o site sozinha (O seu SaaS).',
 ];
 
-const totalValue = unlockedContent.reduce((acc, item) => acc + item.value, 0);
 
-
-export function OfferSection({ result, onBack }: OfferSectionProps) {
-  const [priceRevealed, setPriceRevealed] = useState(false);
-
-  const score = result?.compatibilityScore ?? 92;
+export function OfferSection({ onBack }: OfferSectionProps) {
 
   const handlePayment = () => {
     // Hotmart checkout link placeholder
@@ -61,90 +30,50 @@ export function OfferSection({ result, onBack }: OfferSectionProps) {
     <div className="w-full flex flex-col items-center text-center gap-4 max-w-2xl animate-fade-in">
         <div className="bg-primary/20 text-primary font-bold py-1 px-4 rounded-full flex items-center gap-2">
             <Sparkles className="w-4 h-4" />
-            COMPATIBILIDADE: {score}%
+            PERFIL APROVADO
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold text-white font-headline leading-tight">
-            PARABÉNS. SEU ACESSO AO PROTOCOLO RENDA IA FOI PRÉ-APROVADO.
+        <h1 className="text-4xl md:text-5xl font-bold text-white font-headline leading-tight">
+            Você está apto a usar o Criador de Sites com IA.
         </h1>
+        <p className="text-lg text-slate-300 max-w-xl">
+            Você não precisa pagar R$ 5.000 em um curso de Web Design. Preparamos o 'Kit de Acesso Rápido' com tudo que você precisa para copiar, colar e fazer sua primeira venda de R$ 500,00 ainda hoje.
+        </p>
         
-        <Card className="relative overflow-hidden bg-slate-900/50 backdrop-blur-xl border-2 border-primary/50 p-6 md:p-8 rounded-2xl shadow-lg w-full text-center mt-4 shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
+        <Card className="relative overflow-hidden bg-slate-900/50 backdrop-blur-xl border-2 border-primary/50 p-6 md:p-8 rounded-2xl shadow-lg w-full text-left mt-4 shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
             <div className="absolute top-0 left-0 w-full h-full bg-grid opacity-20" style={{backgroundSize: '40px 40px'}}></div>
-            <div className="relative z-10 flex flex-col items-center">
-                <div className="p-4 bg-primary/10 rounded-full border-2 border-primary/50 mb-4 animate-pulse-subtle">
-                    <BadgeCheck className="w-12 h-12 text-primary" />
-                </div>
-                <h2 className="text-2xl font-bold text-white mb-2">Seu perfil é ideal. Veja o que você destrava agora:</h2>
-                <p className="text-slate-300 max-w-lg mx-auto mb-6">Se, mesmo depois de ver a prova e entender o mecanismo, você ainda duvida, talvez o problema não seja o método.</p>
-                
-                <div className="w-full text-left space-y-4 mb-6">
-                    {unlockedContent.map((item, index) => (
-                        <div key={index} className="flex items-start gap-4 text-slate-300 bg-white/5 p-4 rounded-lg border border-white/10 hover:border-primary/50 transition-all">
-                            <div className="p-3 bg-primary/10 rounded-full mt-1 border border-primary/20">{item.icon}</div>
-                            <div className="flex-1">
-                                <div className="flex justify-between items-start">
-                                    <h4 className="font-bold text-white leading-tight">{item.title}</h4>
-                                    <span className="text-sm text-slate-400 line-through whitespace-nowrap ml-4">R$ {item.value.toFixed(2).replace('.', ',')}</span>
-                                </div>
-                                <p className="text-sm text-slate-400 mt-1">{item.description}</p>
-                                {item.isBonus && (
-                                    <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-primary bg-primary/20 px-2 py-1 rounded-full">
-                                        <Gift className="w-3 h-3" />
-                                        BÔNUS ESPECIAL
-                                    </div>
-                                )}
-                            </div>
+            <div className="relative z-10 flex flex-col">
+                <h2 className="text-2xl font-bold text-white mb-4 text-center">O Que Você Recebe:</h2>
+
+                <div className="space-y-3 mb-6">
+                    {kitDeAcessoRapido.map((item, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                            <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                            <p className="flex-1 text-slate-300">{item}</p>
                         </div>
                     ))}
                 </div>
 
-
-                {priceRevealed ? (
-                    <div className="w-full animate-fade-in space-y-4">
-                        <div className="bg-gradient-to-t from-primary/10 to-transparent p-6 rounded-lg border border-primary/20">
-                            <p className="text-slate-400 line-through text-xl">De R$ {totalValue.toFixed(2).replace('.', ',')}</p>
-                            <p className="text-white font-bold"><span className="text-5xl">R$ 19,90</span></p>
-                            <p className="text-slate-300 text-sm">Pagamento único. Acesso vitalício.</p>
-                        </div>
-
-                        <div className="mt-6 mb-4 border-2 border-dashed border-primary/50 p-4 rounded-xl bg-primary/10 text-center">
-                            <div className="flex justify-center mb-2">
-                                <ShieldCheck className="w-10 h-10 text-primary" />
-                            </div>
-                            <h4 className="font-bold text-white text-lg">Sua Garantia Blindada de Resultados</h4>
-                            <p className="text-slate-300 text-sm mt-1">
-                                É simples: siga o protocolo. Se em 30 dias você não fechar seu primeiro cliente usando o método, eu devolvo 100% do seu investimento e ainda te faço um PIX de R$100 pelo seu tempo. O risco é todo meu.
-                            </p>
-                        </div>
-                        
-
-                        <Button 
-                            size="lg" 
-                            onClick={handlePayment}
-                            className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
-                        >
-                            <Zap className="w-5 h-5 -ml-2 mr-2" />
-                            QUERO MEU ACESSO IMEDIATO (COM RISCO ZERO)
-                        </Button>
-                        <CountdownTimer />
+                <div className="w-full animate-fade-in space-y-2 mt-4 text-center">
+                    <div className="bg-gradient-to-t from-primary/10 to-transparent p-6 rounded-lg border border-primary/20">
+                        <p className="text-slate-400 line-through text-xl">De R$ 97,00</p>
+                        <p className="text-white font-bold"><span className="text-5xl">R$ 19,90</span></p>
+                        <p className="text-slate-300 text-sm">Taxa única de cadastro.</p>
                     </div>
-                ) : (
-                  <div className="w-full space-y-4">
-                      <div className="text-center">
-                        <p className="text-slate-400">Valor total de tudo que você recebe:</p>
-                        <p className="text-2xl font-bold text-slate-400 line-through">R$ {totalValue.toFixed(2).replace('.', ',')}</p>
-                      </div>
-                      <Button 
-                          size="lg" 
-                          onClick={() => setPriceRevealed(true)}
-                          className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
-                      >
-                          DESTRAVAR PREÇO ESPECIAL DE FUNDADOR
-                      </Button>
-                  </div>
-                )}
+
+                    <Button 
+                        size="lg" 
+                        onClick={handlePayment}
+                        className="w-full text-lg md:text-xl font-bold bg-primary text-primary-foreground rounded-full px-12 py-8 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
+                    >
+                        <Zap className="w-5 h-5 -ml-2 mr-2" />
+                        QUERO GANHAR R$ 500 HOJE
+                    </Button>
+                    <p className="text-slate-300 text-sm">Oferta válida pelos próximos 10 minutos.</p>
+                    <CountdownTimer />
+                </div>
             </div>
         </Card>
-
+        
         <Button variant="ghost" onClick={onBack} className="mt-4 flex items-center gap-2 text-slate-400 hover:text-white mx-auto">
             <ChevronLeft className="w-4 h-4" />
             Refazer o teste
