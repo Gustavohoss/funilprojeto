@@ -10,10 +10,10 @@ export function HeroSection({ onStart }: HeroSectionProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-6 max-w-3xl animate-fade-in">
       <h1 className="text-4xl md:text-6xl font-bold text-white font-headline leading-tight [text-shadow:0_0_15px_hsl(var(--primary)/0.5)] mt-12">
-        A IA está criando uma nova classe de milionários. <span className="text-primary">Você vai assistir eles ficarem ricos ou vai se juntar a eles?</span>
+        O Método SECRETO para <span className="text-primary">GANHAR de R$ 500 a R$ 1.000 por dia</span> vendendo sites feitos por IA.
       </h1>
       <p className="text-lg md:text-xl text-slate-300">
-        Este sistema não é para todos. Nosso algoritmo vai analisar se você tem o que é preciso. Responda 4 perguntas e descubra se você pertence a este novo grupo de elite.
+        Esqueça programação. Nosso sistema revela quais empresas precisam de site e usa Inteligência Artificial para construir tudo para você em minutos. Você só precisa copiar, colar e receber o Pix.
       </p>
       <Button 
         onClick={onStart} 
