@@ -63,16 +63,25 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
             body: JSON.stringify(payload)
         });
 
-        const result = await response.json();
-
-        // Helper to extract a detailed error message from the gateway response
+        // Helper to extract a detailed error message from a JSON response
         const getErrorMessage = (res: any) => {
              return res?.errors ? Object.values(res.errors).flat().join(' ') : (res.message || res.error || 'Ocorreu um erro desconhecido.');
         }
 
         if (!response.ok) {
-            return { error: getErrorMessage(result) };
+            // If the response is not OK, try to parse the body for an error message.
+            const responseText = await response.text();
+            try {
+                // Check if the error response is JSON
+                const errorJson = JSON.parse(responseText);
+                return { error: getErrorMessage(errorJson) };
+            } catch (e) {
+                // If it's not JSON, the raw text is the error.
+                return { error: responseText || 'Ocorreu um erro no gateway de pagamento.' };
+            }
         }
+        
+        const result = await response.json();
         
         // Also check for PIX data on a successful response, as the API might return 200 OK with an error message inside.
         if (!result.pix?.pix_qr_code) {
