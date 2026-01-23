@@ -6,8 +6,8 @@ const PRODUCT_TITLE = 'Cria Sites Com IA';
 const BASE_AMOUNT_CENTS = 1990;
 
 const BUMP_PRICES_CENTS: Record<string, number> = {
-    "BUMP_PREMIUM_SCRIPT": 1490,
-    "BUMP_LIFETIME_ACCESS": 1290,
+    "bump_clientes_ricos": 1490,
+    "bump_vitalicio": 1290,
 };
 
 // --- Interfaces ---
@@ -15,6 +15,8 @@ const BUMP_PRICES_CENTS: Record<string, number> = {
 interface CreatePaymentInput {
     name: string;
     email: string;
+    document: string;
+    phone: string;
     bumpHashes: string[];
 }
 
@@ -24,7 +26,7 @@ export interface PaymentResponse {
         pix_qr_code?: string;
         expiration_date?: string;
     };
-    amount_paid?: number; // This might not be returned, but we need the total amount.
+    amount_paid?: number; 
     error?: string;
 }
 
@@ -38,7 +40,7 @@ export interface PaymentStatusResponse {
 // --- Server Actions ---
 
 export async function createPayment(input: CreatePaymentInput): Promise<PaymentResponse> {
-    const { name, email, bumpHashes } = input;
+    const { name, email, document, phone, bumpHashes } = input;
     const apiUrl = 'https://multi.paradisepags.com/api/v1/transaction.php';
     const reference = 'CKO-' + new Date().getTime() + '-' + Math.floor(Math.random() * 100000);
 
@@ -49,26 +51,18 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
         }
     });
 
-    const ddds = ['11', '21', '31', '41', '51', '61', '71', '81', '85', '92', '27', '48'];
-    const randomDDD = ddds[Math.floor(Math.random() * ddds.length)];
-    const randomPhone = randomDDD + '9' + Math.floor(10000000 + Math.random() * 90000000);
-    
-    const cpfs = ['42879052882', '07435993492', '93509642791', '73269352468', '35583648805', '59535423720', '77949412453', '13478710634', '09669560950', '03270618638'];
-    const randomCpf = cpfs[Math.floor(Math.random() * cpfs.length)];
-
     const payload = {
         amount: totalAmount,
         description: PRODUCT_TITLE,
         reference: reference,
         productHash: PRODUCT_HASH,
-        orderbump: bumpHashes,
         customer: { 
             name, 
             email, 
-            document: randomCpf,
-            phone: randomPhone
+            document: document.replace(/\D/g, ''),
+            phone: phone.replace(/\D/g, '')
         },
-        checkoutUrl: 'https://app.com', // Placeholder, seems required by the context of the php script
+        checkoutUrl: 'https://app.com',
     };
 
     try {
@@ -82,32 +76,28 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
             body: JSON.stringify(payload)
         });
 
-        // Helper to extract a detailed error message from a JSON response
         const getErrorMessage = (res: any) => {
              return res?.errors ? Object.values(res.errors).flat().join(' ') : (res.message || res.error || 'Ocorreu um erro desconhecido.');
         }
 
         if (!response.ok) {
-            // If the response is not OK, try to parse the body for an error message.
             const responseText = await response.text();
             try {
-                // Check if the error response is JSON
                 const errorJson = JSON.parse(responseText);
                 return { error: getErrorMessage(errorJson) };
             } catch (e) {
-                // If it's not JSON, the raw text is the error.
                 return { error: responseText || 'Ocorreu um erro no gateway de pagamento.' };
             }
         }
         
         const result = await response.json();
         
-        // Also check for PIX data on a successful response, as the API might return 200 OK with an error message inside.
         if (!result.pix?.pix_qr_code) {
              return { error: getErrorMessage(result) || 'Falha ao gerar o PIX. Tente novamente.' };
         }
-
-        return result;
+        
+        // Return the full amount paid to be displayed on the modal
+        return { ...result, amount_paid: totalAmount };
 
     } catch (error: any) {
         console.error('Payment Gateway API Error:', error);

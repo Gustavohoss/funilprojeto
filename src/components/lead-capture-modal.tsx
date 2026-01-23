@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription
 } from '@/components/ui/dialog';
 import QRCode from "react-qr-code";
 import { createPayment, checkPaymentStatus, type PaymentResponse } from '@/app/actions';
@@ -21,17 +22,20 @@ const basePrice = 19.90;
 const bump1Price = 14.90;
 const bump2Price = 12.90;
 
-const BUMP1_HASH = "BUMP_PREMIUM_SCRIPT";
-const BUMP2_HASH = "BUMP_LIFETIME_ACCESS";
-
+const BUMP1_HASH = "bump_clientes_ricos";
+const BUMP2_HASH = "bump_vitalicio";
 
 export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [documentCpf, setDocumentCpf] = useState('');
+  const [phone, setPhone] = useState('');
+
   const [isBump1Checked, setIsBump1Checked] = useState(false);
   const [isBump2Checked, setIsBump2Checked] = useState(false);
   const [totalPrice, setTotalPrice] = useState(basePrice);
   const [priceUpdated, setPriceUpdated] = useState(false);
+
   const [view, setView] = useState<'form' | 'qr' | 'success'>('form');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -52,8 +56,25 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
     }
   }, [isBump1Checked, isBump2Checked, isOpen]);
 
+  const maskCPF = (value: string) => {
+    let v = value.replace(/\D/g, ''); 
+    if (v.length > 11) v = v.substring(0, 11);
+    v = v.replace(/(\d{3})(\d)/, '$1.$2');
+    v = v.replace(/(\d{3})(\d)/, '$1.$2');
+    v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    return v;
+  };
+
+  const maskPhone = (value: string) => {
+    let v = value.replace(/\D/g, '');
+    if (v.length > 11) v = v.substring(0, 11);
+    v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
+    v = v.replace(/(\d)(\d{4})$/, '$1-$2');
+    return v;
+  };
+
   const handlePayClick = async () => {
-    if (!name || !email) {
+    if (!name || !email || !documentCpf || !phone) {
       setError("ERRO: Preencha todos os dados para liberar o acesso.");
       setTimeout(() => setError(''), 3000);
       return;
@@ -70,7 +91,7 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
     if (isBump1Checked) bumpHashes.push(BUMP1_HASH);
     if (isBump2Checked) bumpHashes.push(BUMP2_HASH);
 
-    const result = await createPayment({ name, email, bumpHashes });
+    const result = await createPayment({ name, email, document: documentCpf, phone, bumpHashes });
     
     setIsLoading(false);
 
@@ -93,7 +114,7 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
             if (paymentCheckInterval.current) clearInterval(paymentCheckInterval.current);
             setView('success');
         }
-    }, 3000); // Check every 3 seconds
+    }, 3000);
   }
 
   useEffect(() => {
@@ -101,7 +122,7 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
       startPaymentChecker(paymentData.hash);
     }
     
-    return () => { // Cleanup on unmount or view change
+    return () => {
       if (paymentCheckInterval.current) {
         clearInterval(paymentCheckInterval.current);
       }
@@ -117,6 +138,8 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
       setIsBump2Checked(false);
       setName('');
       setEmail('');
+      setDocumentCpf('');
+      setPhone('');
       setIsLoading(false);
       setPaymentData(null);
       setError('');
@@ -129,7 +152,6 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
   const copyPixCode = () => {
     if (paymentData?.pix?.pix_qr_code) {
         navigator.clipboard.writeText(paymentData.pix.pix_qr_code);
-        // Maybe add a small "copied" feedback
     }
   }
 
@@ -141,8 +163,9 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="font-mono bg-[#0a0a0a] border-primary shadow-[0_0_30px_hsl(var(--primary)/0.15)] p-0 max-w-lg rounded-lg overflow-hidden sm:rounded-lg">
-        <DialogHeader className="sr-only">
-          <DialogTitle>Protocolo de Pagamento</DialogTitle>
+        <DialogHeader>
+            <DialogTitle className="sr-only">Protocolo de Pagamento</DialogTitle>
+            <DialogDescription className="sr-only">Formulário de checkout para compra do produto.</DialogDescription>
         </DialogHeader>
         <div className="terminal-header bg-black p-4 border-b border-primary flex justify-between items-center text-xs font-bold text-primary">
             <span className="blinking-cursor">{'>'} PROTOCOLO DE PAGAMENTO_</span>
@@ -165,7 +188,7 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
                     <div className="price-display text-center mb-4 sm:mb-6 pb-4 sm:pb-5 border-b border-dashed border-border">
                         <div className="price-label text-slate-500 text-xs line-through">{formatPrice(97.00)}</div>
                         <div className={`current-price text-4xl sm:text-5xl text-white font-bold my-1`}>
-                            {formatPrice(totalPrice)}
+                            {formatPrice((paymentData.amount_paid ?? totalPrice * 100) / 100)}
                         </div>
                         <div className="price-sub text-white text-xs sm:text-sm uppercase tracking-wider">
                            AGUARDANDO PAGAMENTO...
@@ -209,16 +232,26 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
                     </ul>
 
                     <form id="checkout-form" onSubmit={(e) => e.preventDefault()}>
-                        <div className="mb-4">
-                            <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">Nome Completo</label>
-                            <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu nome..." required />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">E-mail Principal</label>
-                            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu e-mail..." required />
+                        <div className="space-y-3">
+                            <div>
+                                <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">Nome Completo</label>
+                                <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu nome..." required />
+                            </div>
+                            <div>
+                                <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">E-mail Principal</label>
+                                <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu e-mail..." required />
+                            </div>
+                             <div>
+                                <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">CPF</label>
+                                <input type="tel" value={documentCpf} onChange={e => setDocumentCpf(maskCPF(e.target.value))} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="000.000.000-00" required />
+                            </div>
+                            <div>
+                                <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">WhatsApp / Celular</label>
+                                <input type="tel" value={phone} onChange={e => setPhone(maskPhone(e.target.value))} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="(00) 00000-0000" required />
+                            </div>
                         </div>
                         
-                        {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
+                        {error && <p className="text-red-500 text-sm text-center my-4">{error}</p>}
 
                         <div className="my-4 sm:my-6 flex flex-col gap-3">
                             <label className={`bump-box flex gap-2.5 items-center p-3 bg-white/5 border-2 border-dashed rounded-md cursor-pointer transition-all duration-300 relative ${isBump1Checked ? 'border-primary bg-primary/5' : 'border-border'}`} >
