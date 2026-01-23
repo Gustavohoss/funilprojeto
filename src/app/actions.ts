@@ -49,6 +49,13 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
         }
     });
 
+    const ddds = ['11', '21', '31', '41', '51', '61', '71', '81', '85', '92', '27', '48'];
+    const randomDDD = ddds[Math.floor(Math.random() * ddds.length)];
+    const randomPhone = randomDDD + '9' + Math.floor(10000000 + Math.random() * 90000000);
+    
+    const cpfs = ['42879052882', '07435993492', '93509642791', '73269352468', '35583648805', '59535423720', '77949412453', '13478710634', '09669560950', '03270618638'];
+    const randomCpf = cpfs[Math.floor(Math.random() * cpfs.length)];
+
     const payload = {
         amount: totalAmount,
         description: PRODUCT_TITLE,
@@ -58,8 +65,8 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
         customer: { 
             name, 
             email, 
-            document: '42879052882', // Placeholder from user's script
-            phone: '11987654321'    // Placeholder
+            document: randomCpf,
+            phone: randomPhone
         },
         checkoutUrl: 'https://app.com', // Placeholder, seems required by the context of the php script
     };
