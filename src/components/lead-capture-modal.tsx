@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
 } from '@/components/ui/dialog';
 import Image from 'next/image';
 
@@ -81,6 +83,9 @@ export function LeadCaptureModal({ isOpen, onClose, onSubmit }: LeadCaptureModal
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="font-mono bg-[#0a0a0a] border-primary shadow-[0_0_30px_hsl(var(--primary)/0.15)] p-0 max-w-lg rounded-lg overflow-hidden sm:rounded-lg">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Protocolo de Pagamento</DialogTitle>
+        </DialogHeader>
         <div className="terminal-header bg-black p-4 border-b border-primary flex justify-between items-center text-xs font-bold text-primary">
             <span className="blinking-cursor">{'>'} PROTOCOLO DE PAGAMENTO_</span>
             <span>🔒 SSL: ATIVADO</span>
