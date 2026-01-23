@@ -42,8 +42,15 @@ export async function createPayment(input: CreatePaymentInput): Promise<PaymentR
     const apiUrl = 'https://multi.paradisepags.com/api/v1/transaction.php';
     const reference = 'CKO-' + new Date().getTime() + '-' + Math.floor(Math.random() * 100000);
 
+    let totalAmount = BASE_AMOUNT_CENTS;
+    bumpHashes.forEach(hash => {
+        if (BUMP_PRICES_CENTS[hash]) {
+            totalAmount += BUMP_PRICES_CENTS[hash];
+        }
+    });
+
     const payload = {
-        amount: BASE_AMOUNT_CENTS,
+        amount: totalAmount,
         description: PRODUCT_TITLE,
         reference: reference,
         productHash: PRODUCT_HASH,
