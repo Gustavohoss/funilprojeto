@@ -156,7 +156,7 @@ export function QuizSection({ onComplete, onBack, onHoursChange }: QuizSectionPr
                     onClick={() => handleAnswer(option)}
                     variant="outline"
                     size="lg"
-                    className="w-full text-lg py-8 border-primary/30 bg-transparent hover:bg-primary/20 hover:text-white transition-all duration-200"
+                    className="w-full text-lg py-8 border-primary/30 bg-transparent hover:bg-primary/20 hover:text-white transition-all duration-200 whitespace-normal h-auto"
                   >
                     {option}
                   </Button>
