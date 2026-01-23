@@ -149,7 +149,7 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
             <span>🔒 SSL: ATIVADO</span>
         </div>
 
-        <div className="modal-body p-6">
+        <div className="modal-body p-4 sm:p-6">
             {view === 'success' && (
                 <div className="flex flex-col items-center justify-center text-center gap-4 animate-fade-in py-8">
                     <CheckCircle className="w-20 h-20 text-primary animate-pulse-subtle" />
@@ -162,19 +162,19 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
             )}
             {view === 'qr' && paymentData && (
                  <>
-                    <div className="price-display text-center mb-6 pb-5 border-b border-dashed border-border">
+                    <div className="price-display text-center mb-4 sm:mb-6 pb-4 sm:pb-5 border-b border-dashed border-border">
                         <div className="price-label text-slate-500 text-xs line-through">{formatPrice(97.00)}</div>
-                        <div className={`current-price text-5xl text-white font-bold my-1`}>
+                        <div className={`current-price text-4xl sm:text-5xl text-white font-bold my-1`}>
                             {formatPrice(totalPrice)}
                         </div>
-                        <div className="price-sub text-white text-sm uppercase tracking-wider">
+                        <div className="price-sub text-white text-xs sm:text-sm uppercase tracking-wider">
                            AGUARDANDO PAGAMENTO...
                         </div>
                     </div>
-                    <div className="qr-section mt-5 text-center bg-white p-5 rounded-lg animate-fade-in" style={{display: 'block'}}>
+                    <div className="qr-section mt-5 text-center bg-white p-4 sm:p-5 rounded-lg animate-fade-in" style={{display: 'block'}}>
                         <p className="text-black font-bold font-sans mb-2.5">ESCANEIE PARA PAGAR:</p>
-                        <div className='p-2 bg-white inline-block'>
-                          <QRCode value={paymentData.pix?.pix_qr_code || ''} size={180} />
+                        <div className='p-2 bg-white inline-block max-w-[180px] w-full'>
+                           <QRCode value={paymentData.pix?.pix_qr_code || ''} size={256} style={{ height: "auto", maxWidth: "100%", width: "100%" }} />
                         </div>
                         <p className="text-slate-700 text-xs mt-2.5 font-sans">Ou copie o código abaixo:</p>
                         <textarea 
@@ -193,47 +193,47 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
             )}
             {view === 'form' && (
                 <>
-                    <div className="price-display text-center mb-6 pb-5 border-b border-dashed border-border">
+                    <div className="price-display text-center mb-4 sm:mb-6 pb-4 sm:pb-5 border-b border-dashed border-border">
                         <div className="price-label text-slate-500 text-xs line-through">De R$ 97,00 por</div>
-                        <div className={`current-price text-5xl text-white font-bold my-1 transition-colors duration-300 ${priceUpdated ? 'text-primary' : ''}`}>
+                        <div className={`current-price text-4xl sm:text-5xl text-white font-bold my-1 transition-colors duration-300 ${priceUpdated ? 'text-primary' : ''}`}>
                             {formatPrice(totalPrice)}
                         </div>
-                        <div className="price-sub text-primary text-[11px] uppercase tracking-wider">
+                        <div className="price-sub text-primary text-[10px] sm:text-[11px] uppercase tracking-wider">
                             ⚡ ACESSO IMEDIATO
                         </div>
                     </div>
 
-                    <ul className="access-list list-none mb-6 bg-primary/5 p-4 rounded-md border border-white/10 text-sm">
+                    <ul className="access-list list-none mb-6 bg-primary/5 p-3 sm:p-4 rounded-md border border-white/10 text-xs sm:text-sm">
                         <li className="text-slate-300 mb-2 flex items-center"><span className="text-primary mr-2.5 font-bold">[✓]</span> IA Criadora de Sites (SaaS)</li>
                         <li className="text-slate-300 flex items-center"><span className="text-primary mr-2.5 font-bold">[✓]</span> Manual do Caçador + Scripts</li>
                     </ul>
 
                     <form id="checkout-form" onSubmit={(e) => e.preventDefault()}>
                         <div className="mb-4">
-                            <label className="block text-muted-foreground text-[11px] mb-1.5 uppercase">Nome Completo</label>
-                            <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input w-full p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu nome..." required />
+                            <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">Nome Completo</label>
+                            <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu nome..." required />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-muted-foreground text-[11px] mb-1.5 uppercase">E-mail Principal</label>
-                            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-input w-full p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu e-mail..." required />
+                            <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">E-mail Principal</label>
+                            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu e-mail..." required />
                         </div>
                         
                         {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
 
-                        <div className="my-6 flex flex-col gap-4">
-                            <label className={`bump-box flex gap-3 items-start p-4 bg-white/5 border-2 border-dashed rounded-md cursor-pointer transition-all duration-300 relative ${isBump1Checked ? 'border-primary bg-primary/5' : 'border-border'}`} >
+                        <div className="my-4 sm:my-6 flex flex-col gap-3">
+                            <label className={`bump-box flex gap-2.5 items-center p-3 bg-white/5 border-2 border-dashed rounded-md cursor-pointer transition-all duration-300 relative ${isBump1Checked ? 'border-primary bg-primary/5' : 'border-border'}`} >
                                 <div className="absolute -top-2.5 right-2.5 bg-red-600 text-white text-[9px] px-1.5 py-0.5 rounded font-bold uppercase">MAIS VENDIDO</div>
-                                <input type="checkbox" checked={isBump1Checked} onChange={e => setIsBump1Checked(e.target.checked)} className="appearance-none w-5 h-5 min-w-[20px] border-2 border-slate-600 rounded bg-black cursor-pointer flex items-center justify-center mt-0.5 checked:bg-primary checked:border-primary" />
+                                <input type="checkbox" checked={isBump1Checked} onChange={e => setIsBump1Checked(e.target.checked)} className="appearance-none w-5 h-5 min-w-[20px] border-2 border-slate-600 rounded bg-black cursor-pointer flex items-center justify-center checked:bg-primary checked:border-primary" />
                                 <div className="bump-content">
-                                    <h4 className="text-sm text-white mb-1 uppercase">Script Clientes Ricos <span className="text-primary normal-case block sm:inline">(+{formatPrice(bump1Price)})</span></h4>
+                                    <h4 className="text-xs sm:text-sm text-white mb-1 uppercase">Script Clientes Ricos <span className="text-primary normal-case block sm:inline">(+{formatPrice(bump1Price)})</span></h4>
                                     <p className="text-xs text-slate-400 leading-snug">Feche contratos de R$ 2k+ com Advogados e Médicos.</p>
                                 </div>
                             </label>
 
-                            <label className={`bump-box flex gap-3 items-start p-4 bg-white/5 border-2 border-dashed rounded-md cursor-pointer transition-all duration-300 relative ${isBump2Checked ? 'border-primary bg-primary/5' : 'border-border'}`}>
-                                <input type="checkbox" checked={isBump2Checked} onChange={e => setIsBump2Checked(e.target.checked)} className="appearance-none w-5 h-5 min-w-[20px] border-2 border-slate-600 rounded bg-black cursor-pointer flex items-center justify-center mt-0.5 checked:bg-primary checked:border-primary" />
+                            <label className={`bump-box flex gap-2.5 items-center p-3 bg-white/5 border-2 border-dashed rounded-md cursor-pointer transition-all duration-300 relative ${isBump2Checked ? 'border-primary bg-primary/5' : 'border-border'}`}>
+                                <input type="checkbox" checked={isBump2Checked} onChange={e => setIsBump2Checked(e.target.checked)} className="appearance-none w-5 h-5 min-w-[20px] border-2 border-slate-600 rounded bg-black cursor-pointer flex items-center justify-center checked:bg-primary checked:border-primary" />
                                 <div className="bump-content">
-                                    <h4 className="text-sm text-white mb-1 uppercase">Acesso Vitalício <span className="text-primary normal-case block sm:inline">(+{formatPrice(bump2Price)})</span></h4>
+                                    <h4 className="text-xs sm:text-sm text-white mb-1 uppercase">Acesso Vitalício <span className="text-primary normal-case block sm:inline">(+{formatPrice(bump2Price)})</span></h4>
                                     <p className="text-xs text-slate-400 leading-snug">Nunca perca seu acesso e receba atualizações grátis.</p>
                                 </div>
                             </label>
