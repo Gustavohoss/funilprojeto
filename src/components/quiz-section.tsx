@@ -52,7 +52,7 @@ const questions = [
 
 // This is a new sub-component for the special slider question.
 function HoursSliderQuestion({ onContinue, questionText }: { onContinue: (hours: number) => void; questionText: string }) {
-  const [hours, setHours] = useState(1);
+  const [hours, setHours] = useState(0);
 
   const dailyGain = hours * 300;
   const monthlyGain = dailyGain * 30;
@@ -74,10 +74,10 @@ function HoursSliderQuestion({ onContinue, questionText }: { onContinue: (hours:
       <div>
         <p className="mb-4">Horas por dia: <span className="text-primary font-bold">{hours}h</span></p>
         <Slider
-          defaultValue={[1]}
+          defaultValue={[0]}
           value={[hours]}
-          min={1}
-          max={8}
+          min={0}
+          max={15}
           step={1}
           onValueChange={(value) => setHours(value[0])}
           className="w-full max-w-xs mx-auto"
