@@ -9,7 +9,7 @@ import {
   DialogDescription
 } from '@/components/ui/dialog';
 import QRCode from "react-qr-code";
-import { createPayment, checkPaymentStatus, type PaymentResponse } from '@/app/actions';
+import { checkPaymentStatus, type PaymentStatusResponse } from '@/app/actions';
 import { CheckCircle } from 'lucide-react';
 
 type LeadCaptureModalProps = {
@@ -18,12 +18,20 @@ type LeadCaptureModalProps = {
   onSubmit: (data: { name: string; email: string }) => void;
 };
 
+// Interface para a resposta do PIX, movida para cá.
+export interface PaymentResponse {
+    hash?: string;
+    pix?: {
+        pix_qr_code?: string;
+        expiration_date?: string;
+    };
+    amount_paid?: number; 
+    error?: string;
+}
+
 const basePrice = 19.90;
 const bump1Price = 14.90;
 const bump2Price = 12.90;
-
-const BUMP1_HASH = "bump_clientes_ricos";
-const BUMP2_HASH = "bump_vitalicio";
 
 export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
   const [name, setName] = useState('');
@@ -87,20 +95,46 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
     setError('');
     setIsLoading(true);
 
-    const bumpHashes: string[] = [];
-    if (isBump1Checked) bumpHashes.push(BUMP1_HASH);
-    if (isBump2Checked) bumpHashes.push(BUMP2_HASH);
+    try {
+      const response = await fetch('/api/generate-pix', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: Math.round(totalPrice * 100),
+          customerName: name,
+          customerEmail: email,
+          customerDoc: documentCpf,
+          customerPhone: phone,
+        }),
+      });
 
-    const result = await createPayment({ name, email, document: documentCpf, phone, bumpHashes });
-    
-    setIsLoading(false);
+      const result = await response.json();
 
-    if (result.error) {
-        setError(result.error);
-        setTimeout(() => setError(''), 5000);
-    } else {
-        setPaymentData(result);
-        setView('qr');
+      if (!response.ok) {
+        throw new Error(result.error || 'Erro ao gerar PIX');
+      }
+      
+      const transactionData = result.transaction || result;
+
+      const formattedResult: PaymentResponse = {
+          hash: transactionData.id,
+          pix: {
+              pix_qr_code: transactionData.qr_code,
+              expiration_date: transactionData.expires_at,
+          },
+          amount_paid: Math.round(totalPrice * 100)
+      };
+      
+      setPaymentData(formattedResult);
+      setView('qr');
+
+    } catch (e: any) {
+      setError(e.message || 'Falha na comunicação com o servidor.');
+      setTimeout(() => setError(''), 5000);
+    } finally {
+      setIsLoading(false);
     }
   };
 
