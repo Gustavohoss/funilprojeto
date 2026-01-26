@@ -147,4 +147,42 @@ body {
     content: '_';
     animation: blink 1s infinite;
   }
+
+  /* From user prompt for quiz styling */
+  .question-text {
+      @apply text-xl md:text-2xl font-bold text-white mb-8 text-center leading-relaxed;
+  }
+
+  .highlight {
+      @apply text-primary;
+      text-shadow: 0 0 8px hsl(var(--primary) / 0.5);
+  }
+
+  .options-list {
+      @apply flex flex-col gap-3;
+  }
+  
+  .option-btn {
+      @apply bg-white/5 border border-white/20 rounded-lg text-slate-300 p-4 w-full text-left cursor-pointer transition-all duration-300 flex items-center gap-4 text-base;
+  }
+
+  .option-btn:hover {
+      @apply border-primary bg-primary/10 text-white;
+  }
+
+  .radio-fake {
+      @apply w-5 h-5 min-w-[20px] border-2 border-slate-600 rounded-full flex items-center justify-center transition-all duration-300 p-0.5;
+  }
+
+  .option-btn:hover .radio-fake {
+      @apply border-primary;
+  }
+  
+  .radio-fake::after {
+      @apply content-[''] w-full h-full bg-transparent rounded-full transition-all duration-300;
+  }
+
+  .option-btn:hover .radio-fake::after {
+        @apply bg-primary;
+  }
 }

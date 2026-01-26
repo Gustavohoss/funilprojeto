@@ -23,24 +23,19 @@ export default function Home() {
   const [quizAnswers, setQuizAnswers] = useState<Record<string, any>>({});
   const [analysisResult, setAnalysisResult] = useState<SimulatedAnalysisOutput | null>(null);
 
-  const updateTitleWithEarnings = useCallback((hours: number | null) => {
-    if (typeof window !== 'undefined') {
-      if (hours === null || hours === 0) {
-        document.title = ORIGINAL_TITLE;
-      } else {
-        const monthlyEarning = hours * 300 * 30;
-        document.title = `Potencial de R$ ${monthlyEarning.toLocaleString('pt-BR')}/mês | ${ORIGINAL_TITLE}`;
-      }
-    }
-  }, []);
-
   const handleStartQuiz = () => setStep('quiz');
+  
   const handleGoBackToHero = () => {
-    updateTitleWithEarnings(null);
+    if (typeof window !== 'undefined') {
+        document.title = ORIGINAL_TITLE;
+    }
     setStep('hero');
   };
+  
   const handleGoBackToQuiz = () => {
-    updateTitleWithEarnings(null);
+    if (typeof window !== 'undefined') {
+        document.title = ORIGINAL_TITLE;
+    }
     setQuizAnswers({});
     setAnalysisResult(null);
     setStep('quiz');
@@ -56,7 +51,9 @@ export default function Home() {
 
   useEffect(() => {
     if (step === 'processing' && Object.keys(quizAnswers).length > 0) {
-      updateTitleWithEarnings(null);
+      if (typeof window !== 'undefined') {
+        document.title = ORIGINAL_TITLE;
+      }
       
       const runAnalysis = async () => {
         await new Promise(resolve => setTimeout(resolve, 4000));
@@ -71,7 +68,7 @@ export default function Home() {
       };
       runAnalysis();
     }
-  }, [step, quizAnswers, updateTitleWithEarnings]);
+  }, [step, quizAnswers]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -86,7 +83,7 @@ export default function Home() {
       <main className="flex min-h-svh w-full flex-col items-center p-4 md:p-8 overflow-y-auto">
         <div className="relative z-10 w-full h-full flex flex-col items-center justify-center flex-grow py-8">
           {step === 'hero' && <HeroSection onStart={handleStartQuiz} />}
-          {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBackToHero} onHoursChange={updateTitleWithEarnings} />}
+          {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBackToHero} />}
           {step === 'processing' && <ProcessingSection />}
           {step === 'analysis' && <AnalysisResultSection result={analysisResult} onComplete={handleAnalysisComplete} />}
           {step === 'socialProof' && <SocialProofSection onComplete={handleSocialProofComplete} />}
