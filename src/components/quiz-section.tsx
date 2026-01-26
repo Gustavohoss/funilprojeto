@@ -24,7 +24,7 @@ const questions = [
   },
   { 
     id: 'experience_level', 
-    text: 'Nossa IA faz 90% do trabalho técnico (códigos e design). Qual é o seu nível atual de experiência com criação de sites?', 
+    text: 'Nossa IA faz 100% do trabalho técnico (códigos e design). Qual é o seu nível atual de experiência com criação de sites?', 
     options: [
       'Sou totalmente iniciante (Nunca criei um site).', 
       'Tenho uma noção básica.', 
