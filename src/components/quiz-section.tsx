@@ -15,6 +15,14 @@ type QuizSectionProps = {
 
 const questions = [
   { 
+    id: 'concept_understanding', 
+    text: 'O sistema que vamos analisar é simples: você usará nossa IA para criar sites para empresas e cobrar por isso, ficando com 100% do lucro. O modelo de negócio está claro para você?', 
+    options: [
+      'Sim, entendi e quero continuar.', 
+      'Parece bom, quero saber mais.'
+    ] 
+  },
+  { 
     id: 'experience_level', 
     text: 'Nossa IA faz 90% do trabalho técnico (códigos e design). Qual é o seu nível atual de experiência com criação de sites?', 
     options: [
