@@ -34,10 +34,7 @@ const bump1Price = 14.90;
 const bump2Price = 12.90;
 
 export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [documentCpf, setDocumentCpf] = useState('');
-  const [phone, setPhone] = useState('');
 
   const [isBump1Checked, setIsBump1Checked] = useState(false);
   const [isBump2Checked, setIsBump2Checked] = useState(false);
@@ -64,33 +61,11 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
     }
   }, [isBump1Checked, isBump2Checked, isOpen]);
 
-  const maskCPF = (value: string) => {
-    let v = value.replace(/\D/g, ''); 
-    if (v.length > 11) v = v.substring(0, 11);
-    v = v.replace(/(\d{3})(\d)/, '$1.$2');
-    v = v.replace(/(\d{3})(\d)/, '$1.$2');
-    v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-    return v;
-  };
-
-  const maskPhone = (value: string) => {
-    let v = value.replace(/\D/g, '');
-    if (v.length > 11) v = v.substring(0, 11);
-    v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
-    v = v.replace(/(\d)(\d{4})$/, '$1-$2');
-    return v;
-  };
-
   const handlePayClick = async () => {
-    if (!name || !email || !documentCpf || !phone) {
-      setError("ERRO: Preencha todos os dados para liberar o acesso.");
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      setError("ERRO: Preencha um e-mail válido para liberar o acesso.");
       setTimeout(() => setError(''), 3000);
       return;
-    }
-    if (!/\S+@\S+\.\S+/.test(email)) {
-        setError('ERRO: E-mail inválido.');
-        setTimeout(() => setError(''), 3000);
-        return;
     }
     setError('');
     setIsLoading(true);
@@ -103,10 +78,7 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
         },
         body: JSON.stringify({
           amount: Math.round(totalPrice * 100),
-          customerName: name,
           customerEmail: email,
-          customerDoc: documentCpf,
-          customerPhone: phone,
         }),
       });
 
@@ -170,10 +142,7 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
       setView('form');
       setIsBump1Checked(false);
       setIsBump2Checked(false);
-      setName('');
       setEmail('');
-      setDocumentCpf('');
-      setPhone('');
       setIsLoading(false);
       setPaymentData(null);
       setError('');
@@ -268,20 +237,8 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
                     <form id="checkout-form" onSubmit={(e) => e.preventDefault()}>
                         <div className="space-y-3">
                             <div>
-                                <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">Nome Completo</label>
-                                <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu nome..." required />
-                            </div>
-                            <div>
                                 <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">E-mail Principal</label>
-                                <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="Seu e-mail..." required />
-                            </div>
-                             <div>
-                                <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">CPF</label>
-                                <input type="tel" value={documentCpf} onChange={e => setDocumentCpf(maskCPF(e.target.value))} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="000.000.000-00" required />
-                            </div>
-                            <div>
-                                <label className="block text-muted-foreground text-[10px] sm:text-[11px] mb-1.5 uppercase">WhatsApp / Celular</label>
-                                <input type="tel" value={phone} onChange={e => setPhone(maskPhone(e.target.value))} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="(00) 00000-0000" required />
+                                <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-input w-full p-3 sm:p-3.5 bg-[#111] border border-border text-white rounded-sm text-base focus:border-primary focus:bg-black focus:ring-0 focus:shadow-[0_0_8px_hsl(var(--primary)/0.2)]" placeholder="seumelhor@email.com" required />
                             </div>
                         </div>
                         
