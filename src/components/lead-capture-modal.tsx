@@ -118,7 +118,11 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
         const statusResult = await checkPaymentStatus(hash);
         if (statusResult.payment_status === 'paid') {
             if (paymentCheckInterval.current) clearInterval(paymentCheckInterval.current);
-            setView('success');
+            if (statusResult.upsell_url) {
+                window.location.href = statusResult.upsell_url;
+            } else {
+                setView('success');
+            }
         }
     }, 3000);
   }
@@ -214,6 +218,9 @@ export function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
                         >
                             COPIAR CÓDIGO PIX
                         </button>
+                        <p className="text-primary font-bold mt-4 text-sm animate-pulse">
+                          Após o pagamento volte aqui que temos um presente para você!
+                        </p>
                     </div>
                  </>
             )}
