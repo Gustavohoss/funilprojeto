@@ -73,6 +73,12 @@ export default function Home() {
     }
   }, [step, quizAnswers, updateTitleWithEarnings]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+    }
+  }, [step]);
+
 
   return (
     <>
