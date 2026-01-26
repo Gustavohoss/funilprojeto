@@ -25,13 +25,6 @@ export default function Home() {
 
   const handleStartQuiz = () => setStep('quiz');
   
-  const handleGoBackToHero = () => {
-    if (typeof window !== 'undefined') {
-        document.title = ORIGINAL_TITLE;
-    }
-    setStep('hero');
-  };
-  
   const handleGoBackToQuiz = () => {
     if (typeof window !== 'undefined') {
         document.title = ORIGINAL_TITLE;
@@ -83,7 +76,7 @@ export default function Home() {
       <main className="flex min-h-svh w-full flex-col items-center p-4 md:p-8 overflow-y-auto">
         <div className="relative z-10 w-full h-full flex flex-col items-center justify-center flex-grow py-8">
           {step === 'hero' && <HeroSection onStart={handleStartQuiz} />}
-          {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} onBack={handleGoBackToHero} />}
+          {step === 'quiz' && <QuizSection onComplete={handleQuizComplete} />}
           {step === 'processing' && <ProcessingSection />}
           {step === 'analysis' && <AnalysisResultSection result={analysisResult} onComplete={handleAnalysisComplete} />}
           {step === 'socialProof' && <SocialProofSection onComplete={handleSocialProofComplete} />}

@@ -148,41 +148,56 @@ body {
     animation: blink 1s infinite;
   }
 
-  /* From user prompt for quiz styling */
   .question-text {
-      @apply text-xl md:text-2xl font-bold text-white mb-8 text-center leading-relaxed;
+    @apply text-lg leading-normal mb-6 text-center font-bold;
   }
 
   .highlight {
-      @apply text-primary;
-      text-shadow: 0 0 8px hsl(var(--primary) / 0.5);
+    color: hsl(var(--primary));
+    text-shadow: 0 0 5px hsl(var(--primary) / 0.5);
   }
 
   .options-list {
-      @apply flex flex-col gap-3;
+    @apply flex flex-col gap-3;
   }
-  
+
   .option-btn {
-      @apply bg-white/5 border border-white/20 rounded-lg text-slate-300 p-4 w-full text-left cursor-pointer transition-all duration-300 flex items-center gap-4 text-base;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid hsl(var(--border));
+    color: #ddd;
+    padding: 15px;
+    @apply text-left cursor-pointer transition-all duration-300 flex items-center gap-2.5 text-sm;
   }
 
   .option-btn:hover {
-      @apply border-primary bg-primary/10 text-white;
+    border-color: hsl(var(--primary));
+    background: hsl(var(--primary) / 0.1);
+    @apply text-white;
   }
 
   .radio-fake {
-      @apply w-5 h-5 min-w-[20px] border-2 border-slate-600 rounded-full flex items-center justify-center transition-all duration-300 p-0.5;
-  }
-
-  .option-btn:hover .radio-fake {
-      @apply border-primary;
-  }
-  
-  .radio-fake::after {
-      @apply content-[''] w-full h-full bg-transparent rounded-full transition-all duration-300;
+    @apply w-3.5 h-3.5 border border-slate-500 rounded-full flex items-center justify-center min-w-[14px];
   }
 
   .option-btn:hover .radio-fake::after {
-        @apply bg-primary;
+    content: '';
+    @apply w-2 h-2 rounded-full;
+    background: hsl(var(--primary));
+  }
+
+  .progress-container {
+    @apply w-full h-1.5 rounded-full mb-8 overflow-hidden;
+    background: #222;
+  }
+
+  .progress-bar {
+    @apply h-full transition-all duration-300;
+    background: hsl(var(--primary));
+    box-shadow: 0 0 10px hsl(var(--primary));
+  }
+
+  .step-count {
+    @apply text-center text-xs mb-5 -mt-6 block;
+    color: hsl(var(--muted-foreground));
   }
 }
