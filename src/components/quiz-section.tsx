@@ -103,9 +103,15 @@ function HoursSliderQuestion({ onContinue, questionText }: { onContinue: (hours:
             <p className="text-3xl font-bold text-white mt-1">{formatCurrency(yearlyGain)}</p>
         </div>
       </div>
-
-      {yearlyGain >= 108000 && (
-          <p className="text-slate-300 text-sm">Em um ano, você poderia <span className="text-white font-bold">comprar um carro novo</span>.</p>
+      
+      {hours > 0 ? (
+        <p className="text-slate-300 text-sm h-5">
+          Em um ano, você poderia <span className="text-white font-bold">comprar um carro novo</span>.
+        </p>
+      ) : (
+        <p className="text-yellow-400 text-sm animate-pulse h-5 text-center">
+          Selecione pelo menos 1 hora para continuar.
+        </p>
       )}
 
       <Button
