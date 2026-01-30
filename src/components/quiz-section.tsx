@@ -110,7 +110,7 @@ function HoursSliderQuestion({ onContinue, questionText }: { onContinue: (hours:
         </p>
       ) : (
         <p className="text-yellow-400 text-sm animate-pulse h-5 text-center">
-          Selecione pelo menos 1 hora para continuar.
+          Sem dedicação, o resultado também será zero.
         </p>
       )}
 
